@@ -3,8 +3,12 @@ package com.restomania.restomania;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 
@@ -16,9 +20,22 @@ public class WaiterActivity extends Activity {
         setContentView(R.layout.activity_waiter);
         TextView n = (TextView) findViewById(R.id.waiter_name);
         TextView r = (TextView) findViewById(R.id.waiter_rate);
+        Button b = (Button) findViewById(R.id.ok_btn);
+        final RatingBar rb = (RatingBar) findViewById(R.id.ratingBar);
         Intent intent = getIntent();
         n.setText(intent.getStringExtra("name"));
         r.setText(intent.getStringExtra("rate"));
+
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO send rate to server
+                float rating = rb.getRating();
+                Log.d("Rating", "" + rating);
+                Intent intent = new Intent(getApplicationContext(), StartActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 

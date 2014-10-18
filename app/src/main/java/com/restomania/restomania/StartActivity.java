@@ -1,9 +1,12 @@
 package com.restomania.restomania;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 
@@ -11,10 +14,25 @@ public class StartActivity extends Activity {
 
     private TextView name;
     private TextView balance;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_startactivity);
+
+        Button btn = (Button) findViewById(R.id.button);
+        final TextView n = (TextView) findViewById(R.id.name);
+        final TextView b = (TextView) findViewById(R.id.balance);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getBaseContext(), WaiterListActivity.class);
+                intent.putExtra("name", n.getText());
+                intent.putExtra("rate", "" + b.getText());
+                startActivity(intent);
+
+            }
+        });
     }
 
 

@@ -8,6 +8,8 @@ import android.os.AsyncTask;
 public class DownloadWaitersTask extends AsyncTask<String, Void, Waiter[]> {
     @Override
     protected Waiter[] doInBackground(String... strings) {
+        //TODO get waiters from server
+
         Waiter[] waiters = new Waiter[3];
         waiters[0] = new Waiter("Вася", 1);
         waiters[1] = new Waiter("Джон", 4.9);
