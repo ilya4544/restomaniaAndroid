@@ -22,3 +22,16 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'com.google.code.gson:gson:2.2.4'
+}
+
+dependencies {
+   compile 'org.jsoup:jsoup:1.7.2'
+
+}
