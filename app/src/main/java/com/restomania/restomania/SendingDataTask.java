@@ -30,7 +30,7 @@ public class SendingDataTask extends AsyncTask<String, Void, Void> {
     @Override
     protected Void doInBackground(String... strings) {
         HttpClient httpclient = new DefaultHttpClient();
-        HttpPost http = new HttpPost("http://91.225.131.187:8080/restoserver/vote/");
+        HttpPost http = new HttpPost("http://91.225.131.187:8080/restoserver/vote");
 
 
         List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();

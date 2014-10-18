@@ -15,23 +15,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/waiter_name"
-        android:textSize="100dp"
+        android:textSize="50dp"
 
         android:layout_gravity="center_horizontal" />
 
-    <TextView
-        android:text="5.0"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/waiter_rate"
-        android:textSize="100dp"
-        android:layout_gravity="center_horizontal" />
 
     <RatingBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/ratingBar"
         android:layout_gravity="center_horizontal" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/review"
+        />
 
     <Button
         android:layout_width="200dp"

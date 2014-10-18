@@ -26,7 +26,6 @@ public class DownloadWaitersTask extends AsyncTask<String, Void, Waiter[]> {
 
         try {
             Waiter[] result = getResult();
-
             return result;
         } catch (IOException e) {
             e.printStackTrace();
@@ -39,7 +38,7 @@ public class DownloadWaitersTask extends AsyncTask<String, Void, Waiter[]> {
         String json = Jsoup.connect("http://91.225.131.187:8080/restoserver/getWaiters").ignoreContentType(true).execute().body();
         Gson gson = new Gson();
         Waiter[] result  = gson.fromJson(json, Waiter[].class);
-        Log.d("Waiters:", Arrays.toString(result));
+
         return result;
 
     }

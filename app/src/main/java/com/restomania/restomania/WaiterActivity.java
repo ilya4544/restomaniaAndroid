@@ -13,28 +13,29 @@ import android.widget.TextView;
 
 
 public class WaiterActivity extends Activity {
-    private static final String USERID = "1122334455";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_waiter);
         TextView n = (TextView) findViewById(R.id.waiter_name);
-        TextView r = (TextView) findViewById(R.id.waiter_rate);
+        //TextView r = (TextView) findViewById(R.id.waiter_rate);
         Button b = (Button) findViewById(R.id.ok_btn);
         final RatingBar rb = (RatingBar) findViewById(R.id.ratingBar);
         Intent intent = getIntent();
+        final String userId = intent.getStringExtra("user_id");
         final String id = intent.getStringExtra("id");
         n.setText(intent.getStringExtra("name"));
-        r.setText(intent.getStringExtra("rating"));
+        rb.setRating((Float.parseFloat(intent.getStringExtra("rating")) / 2));
+
 
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO send rate to server
+
                 float rat = rb.getRating();
                 String rating = String.valueOf((int) (rat * 2));
-                new SendingDataTask().execute(new String[]{String.valueOf(USERID), String.valueOf(id), String.valueOf(rating)});
+                new SendingDataTask().execute(new String[]{String.valueOf(userId), String.valueOf(id), String.valueOf(rating)});
                 Log.d("Rating", "" + rating);
                 Intent intent = new Intent(getApplicationContext(), StartActivity.class);
                 startActivity(intent);

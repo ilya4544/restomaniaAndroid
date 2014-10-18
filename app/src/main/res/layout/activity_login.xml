@@ -1,0 +1,43 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.restomania.restomania.LoginActivity"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+
+    <ImageView
+        android:layout_width="246dp"
+        android:layout_height="280dp"
+        android:id="@+id/logo_view"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/logo"
+        android:layout_gravity="center_horizontal" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:ems="10"
+        android:id="@+id/login_view"
+        android:layout_gravity="center_horizontal"
+        android:hint="Введите логин" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/pass_view"
+        android:layout_gravity="center_horizontal"
+        android:hint="Введите пароль" />
+
+    <Button
+        android:layout_width="134dp"
+        android:layout_height="wrap_content"
+        android:text="Войти"
+        android:id="@+id/login_btn"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.53" />
+</LinearLayout>
