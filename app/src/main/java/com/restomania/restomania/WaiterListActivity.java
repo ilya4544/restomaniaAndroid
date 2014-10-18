@@ -8,11 +8,20 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class WaiterListActivity extends ListActivity {
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-        List<Waiter> waiters = new DownloadWaitersTask().doInBackground();
+        //List<Waiter> waiters = new DownloadWaitersTask().doInBackground();
+        Waiter[] waiters = new Waiter[0];
+        try {
+            waiters = new DownloadWaitersTask().execute().get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
         ArrayAdapter<Waiter> adapter = new ArrayAdapter<Waiter>(this,
                 R.layout.row_layout, R.id.label, waiters);
         setListAdapter(adapter);
@@ -26,7 +35,7 @@ public class WaiterListActivity extends ListActivity {
 
         Intent intent = new Intent(this, WaiterActivity.class);
         intent.putExtra("name", item.name);
-        intent.putExtra("rate", "" + item.rate);
+        intent.putExtra("rate", "" + item.rating);
         startActivity(intent);
     }
 }

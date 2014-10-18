@@ -4,16 +4,18 @@ package com.restomania.restomania;
  * Created by Freemahn on 18.10.2014.
  */
 public class Waiter {
+    int id;
     String name;
-    double rate;
+    float rating;
 
-    public Waiter(String name, double rate) {
+    public Waiter(int id, String name, float rating) {
+        this.id = id;
         this.name = name;
-        this.rate = rate;
+        this.rating = rating;
     }
 
     @Override
     public String toString() {
-        return name + " " + rate;
+        return name + " " + rating;
     }
 }

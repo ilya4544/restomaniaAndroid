@@ -1,6 +1,7 @@
 package com.restomania.restomania;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.google.gson.Gson;
 
@@ -18,7 +19,7 @@ import java.util.List;
 /**
  * Created by Freemahn on 18.10.2014.
  */
-public class DownloadWaitersTask extends AsyncTask<String, Void, ArrayList<Waiter>> {
+public class DownloadWaitersTask extends AsyncTask<String, Void, Waiter[]> {
     //    @Override
 //    protected Waiter[] doInBackground(String... strings) {
 //        //TODO get waiters from server
@@ -33,18 +34,29 @@ public class DownloadWaitersTask extends AsyncTask<String, Void, ArrayList<Waite
     public ArrayList<String> waiterList = new ArrayList<String>();
 
     @Override
-    protected ArrayList<Waiter> doInBackground(String... arg) {
-        ArrayList<Waiter> result = null;
+    protected Waiter[] doInBackground(String... arg) {
+
         try {
-            String json = Jsoup.connect("http://91.225.131.187:8080/restoserver/getWaiters").ignoreContentType(true).execute().body();
-            Gson gson = new Gson();
-            Waiter[] waiters = gson.fromJson(json, Waiter[].class);
-            result = new ArrayList<Waiter>();
-            result.addAll(Arrays.asList(waiters));
+
+
+            Waiter[] result = getResult();
+            //result = new ArrayList<Waiter>();
+            // result.addAll(Arrays.asList(waiters));
+            return result;
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-    return result;
+        return null;
+    }
+
+    Waiter[] getResult() throws IOException {
+        Waiter[] result = null;
+        String json = Jsoup.connect("http://91.225.131.187:8080/restoserver/getWaiters").ignoreContentType(true).execute().body();
+        Gson gson = new Gson();
+        result = gson.fromJson(json, Waiter[].class);
+        Log.d("Waiters:", Arrays.toString(result));
+        return result;
+
     }
 }
