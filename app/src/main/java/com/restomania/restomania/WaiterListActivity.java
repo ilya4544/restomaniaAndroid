@@ -30,12 +30,11 @@ public class WaiterListActivity extends ListActivity {
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         Waiter item = (Waiter) getListAdapter().getItem(position);
-       // Toast.makeText(this, item.name + " selected", Toast.LENGTH_LONG).show();
-        //TODO go to activity3 jsoup
-
+        // Toast.makeText(this, item.name + " selected", Toast.LENGTH_LONG).show();
         Intent intent = new Intent(this, WaiterActivity.class);
         intent.putExtra("name", item.name);
-        intent.putExtra("rate", "" + item.rating);
+        intent.putExtra("id", String.valueOf(item.id));
+        intent.putExtra("rating", "" + item.rating);
         startActivity(intent);
     }
 }

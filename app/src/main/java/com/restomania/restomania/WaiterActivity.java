@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 
 public class WaiterActivity extends Activity {
+    private static final String USERID = "1122334455";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,14 +24,17 @@ public class WaiterActivity extends Activity {
         Button b = (Button) findViewById(R.id.ok_btn);
         final RatingBar rb = (RatingBar) findViewById(R.id.ratingBar);
         Intent intent = getIntent();
+        final String id = intent.getStringExtra("id");
         n.setText(intent.getStringExtra("name"));
-        r.setText(intent.getStringExtra("rate"));
+        r.setText(intent.getStringExtra("rating"));
 
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //TODO send rate to server
-                float rating = rb.getRating();
+                float rat = rb.getRating();
+                String rating = String.valueOf((int) (rat * 2));
+                new SendingDataTask().execute(new String[]{String.valueOf(USERID), String.valueOf(id), String.valueOf(rating)});
                 Log.d("Rating", "" + rating);
                 Intent intent = new Intent(getApplicationContext(), StartActivity.class);
                 startActivity(intent);
