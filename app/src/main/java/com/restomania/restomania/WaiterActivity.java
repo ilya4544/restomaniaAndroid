@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -38,9 +39,18 @@ public class WaiterActivity extends Activity {
         final String id = intent.getStringExtra("id");
         n.setText(intent.getStringExtra("name"));
         rb.setRating((Float.parseFloat(intent.getStringExtra("rating")) / 2));
-        Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.w1);
+        Bitmap bm = null;
+        if (id.equals("1"))
+            bm = BitmapFactory.decodeResource(getResources(), R.drawable.w1);
+        if (id.equals("2"))
+            bm = BitmapFactory.decodeResource(getResources(), R.drawable.m1);
+        if (id.equals("3"))
+            bm = BitmapFactory.decodeResource(getResources(), R.drawable.m2);
+        if (id.equals("4"))
+            bm = BitmapFactory.decodeResource(getResources(), R.drawable.m3);
         bm = getRoundedCornerBitmap(bm, 150);
         iw.setImageBitmap(bm);
+        final EditText editText = (EditText) findViewById(R.id.review);
 
         b.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,8 +58,9 @@ public class WaiterActivity extends Activity {
 
                 float rat = rb.getRating();
                 String rating = String.valueOf((int) (rat * 2));
-                new SendingDataTask().execute(new String[]{String.valueOf(userId), String.valueOf(id), String.valueOf(rating)});
+                new SendingDataTask().execute(String.valueOf(userId), String.valueOf(id), String.valueOf(rating), editText.getText().toString());
                 Log.d("Rating", "" + rating);
+                StartActivity.count++;
                 Intent intent = new Intent(getApplicationContext(), StartActivity.class);
                 startActivity(intent);
             }
@@ -57,7 +68,7 @@ public class WaiterActivity extends Activity {
 
     }
 
-    public  Bitmap getRoundedCornerBitmap(final Bitmap source, final int radius) {
+    public Bitmap getRoundedCornerBitmap(final Bitmap source, final int radius) {
         final Bitmap output = Bitmap.createBitmap(source.getWidth(), source
                 .getHeight(), Bitmap.Config.ARGB_8888);
         final Canvas canvas = new Canvas(output);

@@ -17,8 +17,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        android:theme="@style/MyTheme"
-            >
+
         </activity>
         <activity
             android:name=".WaiterActivity"

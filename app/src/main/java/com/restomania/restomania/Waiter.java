@@ -20,6 +20,6 @@ public class Waiter {
 
     @Override
     public String toString() {
-        return name + " " + rating + " " + organization;
+        return "Имя:" + name + "\n" + "Рейтинг:" + rating + " \n" + "Компания:" + organization;
     }
 }

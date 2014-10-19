@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 
 public class StartActivity extends Activity {
-
+    public static int count = 10;
     private TextView name;
     private TextView balance;
 
@@ -33,6 +33,8 @@ public class StartActivity extends Activity {
         final String id = getIntent().getStringExtra("id");
         final TextView n1 = (TextView) findViewById(R.id.name1);
         final TextView n2 = (TextView) findViewById(R.id.name2);
+        TextView countReview = (TextView) findViewById(R.id.count_review);
+        countReview.setText("Всего отзывов: " + count);
         //n1.setText(name);
         ImageView iw = (ImageView) findViewById(R.id.imageView);
         Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.user);
