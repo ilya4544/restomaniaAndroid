@@ -12,7 +12,9 @@
         android:textSize="30dp"
         android:focusableInTouchMode="false"
         android:clickable="false"
-        android:focusable="false">
+        android:focusable="false"
+        android:typeface="monospace"
+        android:textStyle="italic">
     </TextView>
 
     <TextView
