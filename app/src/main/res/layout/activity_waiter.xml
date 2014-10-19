@@ -10,8 +10,15 @@
     android:background="@drawable/fone"
     tools:context="com.restomania.restomania.WaiterActivity">
 
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/w1"
+        android:id="@+id/imView"
+        android:layout_gravity="center" />
+
     <TextView
-        android:text="Вася"
+        android:text="Jennifer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/waiter_name"
@@ -27,14 +34,17 @@
         android:layout_gravity="center_horizontal" />
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/review"
-        />
+        android:hint="Добавьте отзыв"
+        android:editable="true"
+        android:paddingBottom="10dp"
+        android:enabled="true" />
 
     <Button
-        android:layout_width="200dp"
-        android:layout_height="100dp"
+        android:layout_width="190dp"
+        android:layout_height="90dp"
         android:text="OK"
         android:id="@+id/ok_btn"
         android:background="@drawable/rounded_button"

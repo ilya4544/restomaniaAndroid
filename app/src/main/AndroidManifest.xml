@@ -22,11 +22,11 @@
         </activity>
         <activity
             android:name=".WaiterActivity"
-            android:label="Current waiter" >
+            android:label="Текущий официант" >
         </activity>
         <activity
             android:name=".WaiterListActivity"
-            android:label="List of waiters" >
+            android:label="Список официантов" >
         </activity>
         <activity
             android:name=".StartActivity"

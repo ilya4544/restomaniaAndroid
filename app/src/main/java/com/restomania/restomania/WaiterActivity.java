@@ -2,12 +2,23 @@ package com.restomania.restomania;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.BitmapShader;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.RectF;
+import android.graphics.Shader;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -19,7 +30,7 @@ public class WaiterActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_waiter);
         TextView n = (TextView) findViewById(R.id.waiter_name);
-        //TextView r = (TextView) findViewById(R.id.waiter_rate);
+        ImageView iw = (ImageView) findViewById(R.id.imView);
         Button b = (Button) findViewById(R.id.ok_btn);
         final RatingBar rb = (RatingBar) findViewById(R.id.ratingBar);
         Intent intent = getIntent();
@@ -27,7 +38,9 @@ public class WaiterActivity extends Activity {
         final String id = intent.getStringExtra("id");
         n.setText(intent.getStringExtra("name"));
         rb.setRating((Float.parseFloat(intent.getStringExtra("rating")) / 2));
-
+        Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.w1);
+        bm = getRoundedCornerBitmap(bm, 150);
+        iw.setImageBitmap(bm);
 
         b.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,6 +55,21 @@ public class WaiterActivity extends Activity {
             }
         });
 
+    }
+
+    public  Bitmap getRoundedCornerBitmap(final Bitmap source, final int radius) {
+        final Bitmap output = Bitmap.createBitmap(source.getWidth(), source
+                .getHeight(), Bitmap.Config.ARGB_8888);
+        final Canvas canvas = new Canvas(output);
+        final BitmapShader shader = new BitmapShader(source, Shader.TileMode.CLAMP,
+                Shader.TileMode.CLAMP);
+        final Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setShader(shader);
+        final RectF rect = new RectF(0.0f, 0.0f, source.getWidth(), source.getHeight());
+        canvas.drawRoundRect(rect, radius, radius, paint);
+
+        return output;
     }
 
 
