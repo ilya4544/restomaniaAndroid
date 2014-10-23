@@ -5,6 +5,7 @@ Android application:
 - [ ] UI: Android Sherlock Bar (http://actionbarsherlock.com/)
 - [ ] UI: http://android.inspired-ui.com/ read this
 - [ ] UI: and this http://www.androidpatterns.com/
+- [ ] ?Material design( from Google for new Android)
 
 Server:
 - [ ] Generate QR code (and may be keep)
