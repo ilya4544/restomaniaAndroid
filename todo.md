@@ -18,3 +18,4 @@ JSP:
 - [ ] Fine looking site, read and download this http://startbootstrap.com/template-overviews/sb-admin-2/
 
 And more, more, more...
+Freemahn: Challenge is clear.
