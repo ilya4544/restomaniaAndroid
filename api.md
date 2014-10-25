@@ -2,6 +2,7 @@ Server URL: http://104.131.184.188:8080/restoserver/
 =================
 
 - http://104.131.184.188:8080/restoserver/signIn?login=...&hash=...
+  
   Return json { "token" = "Correct token" or "access denied" } or {"success" = false}
 
 - http://104.131.184.188:8080/restoserver/signIn?login=...&hash=...&name=...
