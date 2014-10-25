@@ -5,7 +5,7 @@ Server URL: http://104.131.184.188:8080/restoserver/
   
   Return json { "token" = "...(some correct token)" or "access denied" } or {"success" = false}
 
-- http://104.131.184.188:8080/restoserver/signIn?login=...&hash=...&name=...
+- http://104.131.184.188:8080/restoserver/signUp?login=...&hash=...&name=...
   
   Retun json {"success" = true or false}
   
