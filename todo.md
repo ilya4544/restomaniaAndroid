@@ -10,7 +10,7 @@ Android application:
 
 Server:
 - [ ] Generate QR code (and may be keep)
-- [ ] Authentification
+- [x] Authentification
 - [ ] Payment gate
 - [ ] Good calculate rating
 
