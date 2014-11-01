@@ -1,24 +1,14 @@
 package com.restomania.restomania;
 
-import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.SimpleAdapter;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 public class WaiterListActivity extends ListActivity {
@@ -26,7 +16,6 @@ public class WaiterListActivity extends ListActivity {
 
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-        //List<Waiter> waiters = new DownloadWaitersTask().doInBackground();
         userId = getIntent().getStringExtra("user_id");
         Waiter[] waiters = null;
         try {
@@ -52,8 +41,6 @@ public class WaiterListActivity extends ListActivity {
 
         // Toast.makeText(getApplicationContext(), view + " selected", Toast.LENGTH_LONG).show();
         Waiter item = (Waiter) getListAdapter().getItem(position);
-
-
         Intent intent = new Intent(getApplicationContext(), WaiterActivity.class);
         intent.putExtra("user_id", userId);
         intent.putExtra("name", item.name);

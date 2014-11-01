@@ -5,11 +5,15 @@ package com.restomania.restomania;
  */
 public class User {
     String id;
+    String login;
+    String hash;
     String name;
     int balance;
 
-    public User(String id, String name, int balance) {
+    public User(String id, String login, String hash, String name, int balance) {
         this.id = id;
+        this.login = login;
+        this.hash = hash;
         this.name = name;
         this.balance = balance;
     }

@@ -11,8 +11,8 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".LoginActivity"
-            android:label="Пожалуйста, залогиньтесь" >
-            <intent-filter>
+            android:label="Restomania">
+        <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -28,7 +28,7 @@
             android:label="Список официантов" >
         </activity>
         <activity
-            android:name=".StartActivity"
+            android:name=".UserProfileActivity"
             android:label="Ваш профиль" >
         </activity>
     </application>

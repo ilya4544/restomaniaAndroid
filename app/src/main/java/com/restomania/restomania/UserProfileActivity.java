@@ -10,16 +10,13 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Shader;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 
-
-public class StartActivity extends Activity {
+public class UserProfileActivity extends Activity {
     public static int count = 10;
     private TextView name;
     private TextView balance;
@@ -30,17 +27,20 @@ public class StartActivity extends Activity {
         setContentView(R.layout.activity_start);
 
         Button btn = (Button) findViewById(R.id.button);
-        //String name = getIntent().getStringExtra("name");
+        String name = getIntent().getStringExtra("name");
         final String id = getIntent().getStringExtra("id");
         final TextView n1 = (TextView) findViewById(R.id.name1);
         final TextView n2 = (TextView) findViewById(R.id.name2);
         TextView countReview = (TextView) findViewById(R.id.count_review);
         countReview.setText("Отзывы:       " + count);
-        //n1.setText(name);
+        n1.setText(name.split(" ")[0]);
+        n2.setText(name.split(" ")[1]);
         ImageView iw = (ImageView) findViewById(R.id.imageView);
         Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.user);
         bm = getRoundedCornerBitmap(bm, 150);
         iw.setImageBitmap(bm);
+
+
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -51,26 +51,6 @@ public class StartActivity extends Activity {
 
             }
         });
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.startactivity, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     public Bitmap getRoundedCornerBitmap(final Bitmap source, final int radius) {

@@ -1,29 +1,21 @@
 package com.restomania.restomania;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.google.gson.Gson;
 
-import org.jsoup.nodes.Document;
-import org.jsoup.*;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
+import org.jsoup.Jsoup;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by Freemahn on 18.10.2014.
  */
 public class DownloadWaitersTask extends AsyncTask<String, Void, Waiter[]> {
+    String url = "http://104.131.184.188:8080/restoserver/";
 
     @Override
     protected Waiter[] doInBackground(String... arg) {
-
         try {
             Waiter[] result = getResult();
             return result;
@@ -35,9 +27,9 @@ public class DownloadWaitersTask extends AsyncTask<String, Void, Waiter[]> {
     }
 
     Waiter[] getResult() throws IOException {
-        String json = Jsoup.connect("http://91.225.131.187:8080/restoserver/getWaiters").ignoreContentType(true).execute().body();
+        String json = Jsoup.connect(url + "getWaiters").ignoreContentType(true).execute().body();
         Gson gson = new Gson();
-        Waiter[] result  = gson.fromJson(json, Waiter[].class);
+        Waiter[] result = gson.fromJson(json, Waiter[].class);
 
         return result;
 

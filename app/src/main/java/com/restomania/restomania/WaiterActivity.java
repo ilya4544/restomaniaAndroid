@@ -7,15 +7,10 @@ import android.graphics.BitmapFactory;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,7 +30,7 @@ public class WaiterActivity extends Activity {
         Button b = (Button) findViewById(R.id.ok_btn);
         final RatingBar rb = (RatingBar) findViewById(R.id.ratingBar);
         Intent intent = getIntent();
-        final String userId = intent.getStringExtra("user_id");
+        final String userId = "1";//intent.getStringExtra("user_id");
         final String id = intent.getStringExtra("id");
         n.setText(intent.getStringExtra("name"));
         rb.setRating((Float.parseFloat(intent.getStringExtra("rating")) / 2));
@@ -58,10 +53,11 @@ public class WaiterActivity extends Activity {
 
                 float rat = rb.getRating();
                 String rating = String.valueOf((int) (rat * 2));
+
                 new SendingDataTask().execute(String.valueOf(userId), String.valueOf(id), String.valueOf(rating), editText.getText().toString());
                 Log.d("Rating", "" + rating);
-                StartActivity.count++;
-                Intent intent = new Intent(getApplicationContext(), StartActivity.class);
+                UserProfileActivity.count++;
+                Intent intent = new Intent(getApplicationContext(), UserProfileActivity.class);
                 startActivity(intent);
             }
         });
@@ -84,22 +80,4 @@ public class WaiterActivity extends Activity {
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.waiter, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 }

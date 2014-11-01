@@ -1,7 +1,13 @@
 package com.restomania.restomania;
 
+/**
+ * Created by Freemahn on 26.10.2014.
+ */
+
 import android.os.AsyncTask;
 import android.util.Log;
+
+import com.google.gson.Gson;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -17,31 +23,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Freemahn on 18.10.2014.
+ * Created by Freemahn on 19.10.2014.
  */
-public class SendingDataTask extends AsyncTask<String, Void, Void> {
-    String url = "http://104.131.184.188:8080/restoserver/";
+public class SignInTask extends AsyncTask<String, Void, String> {
+
+    String login, hash;
 
     @Override
-    protected Void doInBackground(String... strings) {
+    protected String doInBackground(String... strings) {
+        List<NameValuePair> list = new ArrayList<NameValuePair>();
+        list.add(new BasicNameValuePair("login", strings[0]));
+        list.add(new BasicNameValuePair("hash", strings[1]));
+        String answer = makePost("http://104.131.184.188:8080/restoserver/signIn", list);
+        Gson gson = new Gson();
+        String b = gson.fromJson(answer, Token.class).token;
+        return b;
+    }
+
+    public static String makePost(String url, List<NameValuePair> nameValuePairs) {
         HttpClient httpclient = new DefaultHttpClient();
-        HttpPost http = new HttpPost(url + "vote");
-
-
-        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-        nameValuePairs.add(new BasicNameValuePair("userId", strings[0]));
-        nameValuePairs.add(new BasicNameValuePair("waiterId", strings[1]));
-        nameValuePairs.add(new BasicNameValuePair("rating", strings[2]));
-        nameValuePairs.add(new BasicNameValuePair("review", strings[3]));
-       /* nameValuePairs.add(new BasicNameValuePair("userId", "123"));
-        nameValuePairs.add(new BasicNameValuePair("waiterId", "11"));
-        nameValuePairs.add(new BasicNameValuePair("rating", "6"));*/
-
+        HttpPost http = new HttpPost(url);
+        StringBuilder total = null;
         try {
             http.setEntity(new UrlEncodedFormEntity(nameValuePairs));
             HttpResponse response = httpclient.execute(http);
             String line = "";
-            StringBuilder total = new StringBuilder();
+            total = new StringBuilder();
             BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
             while ((line = rd.readLine()) != null) {
                 total.append(line);
@@ -49,10 +56,10 @@ public class SendingDataTask extends AsyncTask<String, Void, Void> {
             }
             Log.d("Responce", total.toString());
         } catch (Exception e) {
+            Log.e("In Sending datatask", total.toString());
             e.printStackTrace();
         }
-        return null;
+        return total.toString();
+
     }
-
-
 }
