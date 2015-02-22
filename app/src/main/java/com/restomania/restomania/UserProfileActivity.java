@@ -15,7 +15,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-//user activity, has name and balance
+//user activity, has name, how many reviews he left, and balance
 public class UserProfileActivity extends Activity implements View.OnClickListener {
     public static int countReview;
     private TextView nameFirst;
@@ -46,6 +46,7 @@ public class UserProfileActivity extends Activity implements View.OnClickListene
         btn.setOnClickListener(this);
     }
 
+    //dont touch this
     public Bitmap getRoundedCornerBitmap(final Bitmap source, final int radius) {
         final Bitmap output = Bitmap.createBitmap(source.getWidth(), source
                 .getHeight(), Bitmap.Config.ARGB_8888);

@@ -28,7 +28,7 @@ public class WaiterListActivity extends ListActivity {
             e.printStackTrace();
         }
         Log.d("Waiters:", Arrays.toString(waiters));
-
+        //TODO make good adapter
         ArrayAdapter<Waiter> adapter = new ArrayAdapter<Waiter>(this,
                 R.layout.row_layout, R.id.name_waiter, waiters);
         setListAdapter(adapter);
@@ -41,6 +41,7 @@ public class WaiterListActivity extends ListActivity {
         // Toast.makeText(getApplicationContext(), view + " selected", Toast.LENGTH_LONG).show();
         Waiter waiter = (Waiter) getListAdapter().getItem(position);
         Intent intent = new Intent(this, WaiterActivity.class);
+        //TODO how can replace this ugly code?
         intent.putExtra("userId", userId);
         intent.putExtra("waiterName", waiter.name);
         intent.putExtra("waiterId", String.valueOf(waiter.id));

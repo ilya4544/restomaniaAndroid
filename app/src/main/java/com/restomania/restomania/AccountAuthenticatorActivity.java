@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import java.util.concurrent.ExecutionException;
 
-//first activity, sign in user, then goto profile
+//first activity, sign in user, then go to his/her profile
 public class AccountAuthenticatorActivity extends Activity implements View.OnClickListener {
 
     TextView loginTW;
@@ -22,7 +22,7 @@ public class AccountAuthenticatorActivity extends Activity implements View.OnCli
         Button btn = (Button) findViewById(R.id.login_btn);
         loginTW = (TextView) findViewById(R.id.textLogin);
         passwTW = (TextView) findViewById(R.id.textPassword);
-        //loginFromDB = "valera"; hash = "123";
+        //loginFromDB = "pavel"; hash = "123";
         btn.setOnClickListener(this);
 
 
@@ -49,7 +49,7 @@ public class AccountAuthenticatorActivity extends Activity implements View.OnCli
     }*/
 
 
-    //stub
+    //TODO stub
     public String hash(String strToHash) {
         return strToHash;
     }

@@ -33,11 +33,6 @@ public class SendingDataTask extends AsyncTask<String, Void, Void> {
         nameValuePairs.add(new BasicNameValuePair("waiterId", strings[1]));
         nameValuePairs.add(new BasicNameValuePair("rating", strings[2]));
         nameValuePairs.add(new BasicNameValuePair("review", strings[3]));
-       /* nameValuePairs.add(new BasicNameValuePair("userId", "123"));
-        nameValuePairs.add(new BasicNameValuePair("waiterId", "11"));
-        nameValuePairs.add(new BasicNameValuePair("rating", "6"));*/
-
-
         try {
             http.setEntity(new UrlEncodedFormEntity(nameValuePairs));
             HttpResponse response = httpclient.execute(http);

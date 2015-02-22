@@ -43,6 +43,7 @@ public class WaiterActivity extends Activity implements View.OnClickListener {
         n.setText(waiterName);
         rb.setRating((Float.parseFloat(intent.getStringExtra("waiterRating")) / 2));
         Bitmap bm = null;
+        //TODO get pictures from internet, save to localdb???
         if (userId.equals("1"))
             bm = BitmapFactory.decodeResource(getResources(), R.drawable.w1);
         if (userId.equals("2"))
@@ -57,6 +58,7 @@ public class WaiterActivity extends Activity implements View.OnClickListener {
 
     }
 
+    //TODO ah, dat ugly code again
     public Bitmap getRoundedCornerBitmap(final Bitmap source, final int radius) {
         final Bitmap output = Bitmap.createBitmap(source.getWidth(), source
                 .getHeight(), Bitmap.Config.ARGB_8888);
