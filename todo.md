@@ -7,6 +7,7 @@ Android application:
 - [ ] UI: http://android.inspired-ui.com/ read this
 - [ ] UI: and this http://www.androidpatterns.com/
 - [ ] ?Material design( from Google for new Android)
+- [ ] Localisation(at least Engish/Russian)
 
 Server:
 - [ ] Generate QR code (and may be keep)
@@ -20,7 +21,3 @@ JSP:
 And more, more, more...
 
 
-Freemahn: Challenge is clear. 
-
-
-xaker4544: Go
