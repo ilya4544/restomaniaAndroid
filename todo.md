@@ -6,7 +6,7 @@ Android application:
 - [ ] UI: Android Sherlock Bar (http://actionbarsherlock.com/)
 - [ ] UI: http://android.inspired-ui.com/ read this
 - [ ] UI: and this http://www.androidpatterns.com/
-- [ ] ?Material design( from Google for new Android)
+- [x] ?Material design( from Google for new Android)
 - [ ] Localization(at least Engish/Russian)
 
 Server:
