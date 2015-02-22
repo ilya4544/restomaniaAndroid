@@ -34,15 +34,16 @@ public class SignInTask extends AsyncTask<String, Void, String> {
         List<NameValuePair> list = new ArrayList<NameValuePair>();
         list.add(new BasicNameValuePair("login", strings[0]));
         list.add(new BasicNameValuePair("hash", strings[1]));
-        String answer = makePost("http://104.131.184.188:8080/restoserver/signIn", list);
+        String answer = makePostRequest("http://104.131.184.188:8080/restoserver/signIn", list);
         Gson gson = new Gson();
         String b = gson.fromJson(answer, Token.class).token;
         return b;
     }
 
-    public static String makePost(String url, List<NameValuePair> nameValuePairs) {
+    public static String makePostRequest(String url, List<NameValuePair> nameValuePairs) {
         HttpClient httpclient = new DefaultHttpClient();
         HttpPost http = new HttpPost(url);
+
         StringBuilder total = null;
         try {
             http.setEntity(new UrlEncodedFormEntity(nameValuePairs));
@@ -54,7 +55,7 @@ public class SignInTask extends AsyncTask<String, Void, String> {
                 total.append(line);
 
             }
-            Log.d("Responce", total.toString());
+            Log.d("Response", total.toString());
         } catch (Exception e) {
             Log.e("In Sending datatask", total.toString());
             e.printStackTrace();

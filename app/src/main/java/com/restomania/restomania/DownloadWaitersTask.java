@@ -17,21 +17,15 @@ public class DownloadWaitersTask extends AsyncTask<String, Void, Waiter[]> {
     @Override
     protected Waiter[] doInBackground(String... arg) {
         try {
-            Waiter[] result = getResult();
-            return result;
+
+            String json = Jsoup.connect(url + "getWaiters").ignoreContentType(true).execute().body();
+            Gson gson = new Gson();
+            return gson.fromJson(json, Waiter[].class);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         return null;
-    }
-
-    Waiter[] getResult() throws IOException {
-        String json = Jsoup.connect(url + "getWaiters").ignoreContentType(true).execute().body();
-        Gson gson = new Gson();
-        Waiter[] result = gson.fromJson(json, Waiter[].class);
-
-        return result;
-
     }
 }

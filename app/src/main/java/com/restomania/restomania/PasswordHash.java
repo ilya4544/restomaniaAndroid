@@ -113,7 +113,7 @@ public class PasswordHash {
         byte[] salt = fromHex(params[SALT_INDEX]);
         byte[] hash = fromHex(params[PBKDF2_INDEX]);
         // Compute the hash of the provided password, using the same salt,
-        // iteration count, and hash length
+        // iteration countReview, and hash length
         byte[] testHash = pbkdf2(password, salt, iterations, hash.length);
         // Compare the hashes in constant time. The password is correct if
         // both hashes match.
@@ -141,7 +141,7 @@ public class PasswordHash {
      *
      * @param password   the password to hash.
      * @param salt       the salt
-     * @param iterations the iteration count (slowness factor)
+     * @param iterations the iteration countReview (slowness factor)
      * @param bytes      the length of the hash to compute in bytes
      * @return the PBDKF2 hash of the password
      */

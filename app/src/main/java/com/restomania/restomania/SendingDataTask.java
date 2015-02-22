@@ -19,6 +19,7 @@ import java.util.List;
 /**
  * Created by Freemahn on 18.10.2014.
  */
+/**/
 public class SendingDataTask extends AsyncTask<String, Void, Void> {
     String url = "http://104.131.184.188:8080/restoserver/";
 
@@ -26,9 +27,8 @@ public class SendingDataTask extends AsyncTask<String, Void, Void> {
     protected Void doInBackground(String... strings) {
         HttpClient httpclient = new DefaultHttpClient();
         HttpPost http = new HttpPost(url + "vote");
-
-
         List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+        nameValuePairs.add(new BasicNameValuePair("token", strings[4]));
         nameValuePairs.add(new BasicNameValuePair("userId", strings[0]));
         nameValuePairs.add(new BasicNameValuePair("waiterId", strings[1]));
         nameValuePairs.add(new BasicNameValuePair("rating", strings[2]));
@@ -36,6 +36,7 @@ public class SendingDataTask extends AsyncTask<String, Void, Void> {
        /* nameValuePairs.add(new BasicNameValuePair("userId", "123"));
         nameValuePairs.add(new BasicNameValuePair("waiterId", "11"));
         nameValuePairs.add(new BasicNameValuePair("rating", "6"));*/
+
 
         try {
             http.setEntity(new UrlEncodedFormEntity(nameValuePairs));

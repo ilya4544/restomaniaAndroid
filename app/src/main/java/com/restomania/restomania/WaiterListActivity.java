@@ -13,10 +13,12 @@ import java.util.concurrent.ExecutionException;
 
 public class WaiterListActivity extends ListActivity {
     String userId;
+    String token;
 
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-        userId = getIntent().getStringExtra("user_id");
+        userId = getIntent().getStringExtra("userId");
+        token = getIntent().getStringExtra("token");
         Waiter[] waiters = null;
         try {
             waiters = new DownloadWaitersTask().execute().get();
@@ -29,7 +31,6 @@ public class WaiterListActivity extends ListActivity {
 
         ArrayAdapter<Waiter> adapter = new ArrayAdapter<Waiter>(this,
                 R.layout.row_layout, R.id.name_waiter, waiters);
-
         setListAdapter(adapter);
 
 
@@ -37,17 +38,24 @@ public class WaiterListActivity extends ListActivity {
 
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
-
-
         // Toast.makeText(getApplicationContext(), view + " selected", Toast.LENGTH_LONG).show();
-        Waiter item = (Waiter) getListAdapter().getItem(position);
-        Intent intent = new Intent(getApplicationContext(), WaiterActivity.class);
-        intent.putExtra("user_id", userId);
-        intent.putExtra("name", item.name);
-        intent.putExtra("id", String.valueOf(item.id));
-        intent.putExtra("rating", "" + item.rating);
-        startActivity(intent);
+        Waiter waiter = (Waiter) getListAdapter().getItem(position);
+        Intent intent = new Intent(this, WaiterActivity.class);
+        intent.putExtra("userId", userId);
+        intent.putExtra("waiterName", waiter.name);
+        intent.putExtra("waiterId", String.valueOf(waiter.id));
+        intent.putExtra("waiterRating", "" + waiter.rating);
+        intent.putExtra("token", "" + token);
+        startActivityForResult(intent, 1);
     }
 
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data == null) {
+            return;
+        }
+        setResult(RESULT_OK, getIntent());
+        finish();
+        //if(resultCode)
+    }
 
 }

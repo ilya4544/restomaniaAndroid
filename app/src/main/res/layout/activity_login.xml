@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.restomania.restomania.LoginActivity"
+    tools:context="com.restomania.restomania.AccountAuthenticatorActivity"
     android:orientation="vertical"
     android:background="@drawable/back"
     android:weightSum="1">
@@ -21,20 +21,23 @@
         android:layout_height="wrap_content"
         android:inputType="text"
         android:ems="10"
-        android:id="@+id/login_view"
+        android:id="@+id/textLogin"
         android:layout_gravity="center_horizontal"
         android:hint="Введите логин"
-        android:textColorHint="@android:color/black" />
+        android:textColorHint="@android:color/black"
+        android:text="pavel" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
-        android:id="@+id/pass_view"
+        android:id="@+id/textPassword"
         android:layout_gravity="center_horizontal"
         android:hint="Введите пароль"
-        android:textColorHint="@android:color/black" />
+        android:textColorHint="@android:color/black"
+        android:text="123"
+        android:password="false" />
 
     <Button
         android:layout_width="200dp"
@@ -42,5 +45,5 @@
         android:text="Войти"
         android:id="@+id/login_btn"
         android:layout_gravity="center_horizontal"
-        android:background="@drawable/rounded_button"/>
+        android:background="@drawable/rounded_button" />
 </LinearLayout>

@@ -19,7 +19,12 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 
-public class WaiterActivity extends Activity {
+public class WaiterActivity extends Activity implements View.OnClickListener {
+    String userId;
+    String waiterId;
+    RatingBar rb;
+    EditText reviewEdit;
+    String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,40 +32,28 @@ public class WaiterActivity extends Activity {
         setContentView(R.layout.activity_waiter);
         TextView n = (TextView) findViewById(R.id.waiter_name);
         ImageView iw = (ImageView) findViewById(R.id.imView);
-        Button b = (Button) findViewById(R.id.ok_btn);
-        final RatingBar rb = (RatingBar) findViewById(R.id.ratingBar);
+        Button ok = (Button) findViewById(R.id.ok_btn);
+        reviewEdit = (EditText) findViewById(R.id.review);
+        rb = (RatingBar) findViewById(R.id.ratingBar);
         Intent intent = getIntent();
-        final String userId = "1";//intent.getStringExtra("user_id");
-        final String id = intent.getStringExtra("id");
-        n.setText(intent.getStringExtra("name"));
-        rb.setRating((Float.parseFloat(intent.getStringExtra("rating")) / 2));
+        userId = intent.getStringExtra("userId");
+        waiterId = intent.getStringExtra("waiterId");
+        String waiterName = intent.getStringExtra("waiterName");
+        token = intent.getStringExtra("token");
+        n.setText(waiterName);
+        rb.setRating((Float.parseFloat(intent.getStringExtra("waiterRating")) / 2));
         Bitmap bm = null;
-        if (id.equals("1"))
+        if (userId.equals("1"))
             bm = BitmapFactory.decodeResource(getResources(), R.drawable.w1);
-        if (id.equals("2"))
+        if (userId.equals("2"))
             bm = BitmapFactory.decodeResource(getResources(), R.drawable.m1);
-        if (id.equals("3"))
+        if (userId.equals("3"))
             bm = BitmapFactory.decodeResource(getResources(), R.drawable.m2);
-        if (id.equals("4"))
+        if (userId.equals("4"))
             bm = BitmapFactory.decodeResource(getResources(), R.drawable.m3);
         bm = getRoundedCornerBitmap(bm, 150);
         iw.setImageBitmap(bm);
-        final EditText editText = (EditText) findViewById(R.id.review);
-
-        b.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                float rat = rb.getRating();
-                String rating = String.valueOf((int) (rat * 2));
-
-                new SendingDataTask().execute(String.valueOf(userId), String.valueOf(id), String.valueOf(rating), editText.getText().toString());
-                Log.d("Rating", "" + rating);
-                UserProfileActivity.count++;
-                Intent intent = new Intent(getApplicationContext(), UserProfileActivity.class);
-                startActivity(intent);
-            }
-        });
+        ok.setOnClickListener(this);
 
     }
 
@@ -80,4 +73,15 @@ public class WaiterActivity extends Activity {
     }
 
 
+    @Override
+    public void onClick(View v) {
+        String rating = String.valueOf((int) (rb.getRating() * 2));
+        new SendingDataTask().execute(String.valueOf(userId),
+                String.valueOf(waiterId), String.valueOf(rating),
+                reviewEdit.getText().toString(), token);
+        Log.d("Rating", "" + rating);
+        UserProfileActivity.countReview++;
+        setResult(RESULT_OK, getIntent());
+        finish();
+    }
 }

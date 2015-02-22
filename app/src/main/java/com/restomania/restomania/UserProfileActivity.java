@@ -15,11 +15,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
-public class UserProfileActivity extends Activity {
-    public static int count = 10;
-    private TextView name;
+//user activity, has name and balance
+public class UserProfileActivity extends Activity implements View.OnClickListener {
+    public static int countReview;
+    private TextView nameFirst;
+    private TextView nameLast;
     private TextView balance;
+    TextView countReviewText;
+    String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,29 +31,19 @@ public class UserProfileActivity extends Activity {
 
         Button btn = (Button) findViewById(R.id.button);
         String name = getIntent().getStringExtra("name");
-        final String id = getIntent().getStringExtra("id");
-        final TextView n1 = (TextView) findViewById(R.id.name1);
-        final TextView n2 = (TextView) findViewById(R.id.name2);
-        TextView countReview = (TextView) findViewById(R.id.count_review);
-        countReview.setText("Отзывы:       " + count);
-        n1.setText(name.split(" ")[0]);
-        n2.setText(name.split(" ")[1]);
+        id = getIntent().getStringExtra("id");
+        nameFirst = (TextView) findViewById(R.id.name1);
+        nameLast = (TextView) findViewById(R.id.name2);
+        countReviewText = (TextView) findViewById(R.id.count_review);
+        countReviewText.setText("Отзывы:       " + countReview);
+        nameFirst.setText(name.split(" ")[0]);
+        nameLast.setText(name.split(" ")[1]);
         ImageView iw = (ImageView) findViewById(R.id.imageView);
         Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.user);
         bm = getRoundedCornerBitmap(bm, 150);
         iw.setImageBitmap(bm);
 
-
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getBaseContext(), WaiterListActivity.class);
-                intent.putExtra("user_id", id);
-                //  intent.putExtra("rate", "" + b.getText());
-                startActivity(intent);
-
-            }
-        });
+        btn.setOnClickListener(this);
     }
 
     public Bitmap getRoundedCornerBitmap(final Bitmap source, final int radius) {
@@ -64,7 +57,24 @@ public class UserProfileActivity extends Activity {
         paint.setShader(shader);
         final RectF rect = new RectF(0.0f, 0.0f, source.getWidth(), source.getHeight());
         canvas.drawRoundRect(rect, radius, radius, paint);
-
         return output;
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent(this, WaiterListActivity.class);
+        intent.putExtra("token", getIntent().getStringExtra("token"));
+        intent.putExtra("userId", id);
+        startActivityForResult(intent, 1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data == null) {
+            return;
+        }
+        countReviewText.setText("Отзывы:       " + countReview);
+        //String name = data.getStringExtra("name");
+        //tvName.setText("Your name is " + name);
     }
 }
