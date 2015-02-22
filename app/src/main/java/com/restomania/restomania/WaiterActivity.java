@@ -78,7 +78,7 @@ public class WaiterActivity extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         String rating = String.valueOf((int) (rb.getRating() * 2));
-        new SendingDataTask().execute(String.valueOf(userId),
+        new UploadingReviewTask().execute(String.valueOf(userId),
                 String.valueOf(waiterId), String.valueOf(rating),
                 reviewEdit.getText().toString(), token);
         Log.d("Rating", "" + rating);

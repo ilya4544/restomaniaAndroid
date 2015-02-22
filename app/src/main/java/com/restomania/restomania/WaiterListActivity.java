@@ -21,7 +21,7 @@ public class WaiterListActivity extends ListActivity {
         token = getIntent().getStringExtra("token");
         Waiter[] waiters = null;
         try {
-            waiters = new DownloadWaitersTask().execute().get();
+            waiters = new DownloadingWaitersListTask().execute().get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {

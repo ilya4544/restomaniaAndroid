@@ -11,7 +11,7 @@ import java.io.IOException;
 /**
  * Created by Freemahn on 18.10.2014.
  */
-public class DownloadWaitersTask extends AsyncTask<String, Void, Waiter[]> {
+public class DownloadingWaitersListTask extends AsyncTask<String, Void, Waiter[]> {
     String url = "http://104.131.184.188:8080/restoserver/";
 
     @Override

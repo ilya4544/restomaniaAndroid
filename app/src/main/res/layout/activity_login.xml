@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     tools:context="com.restomania.restomania.AccountAuthenticatorActivity"
     android:orientation="vertical"
-    android:background="@drawable/back"
     android:weightSum="1">
 
 
@@ -44,6 +43,5 @@
         android:layout_height="100dp"
         android:text="Войти"
         android:id="@+id/login_btn"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/rounded_button" />
+        android:layout_gravity="center_horizontal" />
 </LinearLayout>

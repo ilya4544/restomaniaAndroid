@@ -20,7 +20,7 @@ import java.util.List;
  * Created by Freemahn on 18.10.2014.
  */
 /**/
-public class SendingDataTask extends AsyncTask<String, Void, Void> {
+public class UploadingReviewTask extends AsyncTask<String, Void, Void> {
     String url = "http://104.131.184.188:8080/restoserver/";
 
     @Override
