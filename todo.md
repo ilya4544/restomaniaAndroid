@@ -7,7 +7,7 @@ Android application:
 - [ ] UI: http://android.inspired-ui.com/ read this
 - [ ] UI: and this http://www.androidpatterns.com/
 - [x] ?Material design( from Google for new Android)
-- [ ] Localization(at least Engish/Russian)
+- [ ] Localization(at least English/Russian)
 
 Server:
 - [ ] Generate QR code (and may be keep)
