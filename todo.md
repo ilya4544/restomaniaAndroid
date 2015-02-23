@@ -1,6 +1,6 @@
 TODO 
-Android application:
 
+Android application:
 - [ ] !!Fix encoding trouble (to UTF-8)
 - [ ] Replace waiters list with QR code scanner
 - [ ] UI: Android Sherlock Bar (http://actionbarsherlock.com/)
@@ -14,6 +14,11 @@ Server:
 - [x] Authentification
 - [ ] Payment gate
 - [ ] Good calculate rating
+- [ ] !!Fix error 500
+
+Both:
+- [ ] Column reviewCount to users
+- [ ] User and waiter's avatars 
 
 JSP:
 - [ ] Fine looking site, read and download this http://startbootstrap.com/template-overviews/sb-admin-2/
