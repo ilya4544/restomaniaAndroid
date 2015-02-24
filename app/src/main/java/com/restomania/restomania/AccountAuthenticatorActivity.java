@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -115,12 +116,19 @@ public class AccountAuthenticatorActivity extends Activity {
         //true if success
         @Override
         protected Boolean doInBackground(Void... strings) {
-            List<NameValuePair> list = new ArrayList<>();
-            list.add(new BasicNameValuePair("login", mLogin));
-            list.add(new BasicNameValuePair("hash", mPassword));
-            String answer = makePostRequest("http://104.131.184.188:8080/restoserver/signIn", list);
-            Gson gson = new Gson();
-            mToken = gson.fromJson(answer, Token.class).token;
+            try {
+                long time = System.currentTimeMillis();
+                List<NameValuePair> list = new ArrayList<>();
+                list.add(new BasicNameValuePair("login", mLogin));
+                list.add(new BasicNameValuePair("hash", mPassword));
+                String answer = makePostRequest("http://104.131.184.188:8080/restoserver/signIn", list);
+                Gson gson = new Gson();
+                mToken = gson.fromJson(answer, Token.class).token;
+                Log.d("ACCOUNT", (System.currentTimeMillis() - time) + "");
+            } catch (Exception e) {
+                Toast.makeText(getApplicationContext(), "Error " + e, Toast.LENGTH_LONG).show();
+                onCancelled();
+            }
             //TODO what if not such user? need to create
             return !mToken.equals("");
         }

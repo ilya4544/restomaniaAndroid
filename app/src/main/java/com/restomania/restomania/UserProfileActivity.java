@@ -39,7 +39,7 @@ public class UserProfileActivity extends Activity implements View.OnClickListene
         setContentView(R.layout.activity_user);
         Button rateWaiterButton = (Button) findViewById(R.id.button);
         ImageView iw = (ImageView) findViewById(R.id.imageView);
-        Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.user);
+        Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.m1);
         nameFirst = (TextView) findViewById(R.id.name1);
         nameLast = (TextView) findViewById(R.id.name2);
         GetUserInfoTask getUserInfoTask = new GetUserInfoTask(getIntent().getStringExtra("token"));
@@ -98,6 +98,7 @@ public class UserProfileActivity extends Activity implements View.OnClickListene
 
         @Override
         protected Void doInBackground(Void... strings) {
+            long time = System.currentTimeMillis();
             String json = null;
             try {
                 json = Jsoup.connect(url + "getUserProfile?token=" + mToken).ignoreContentType(true).execute().body();
@@ -105,8 +106,9 @@ public class UserProfileActivity extends Activity implements View.OnClickListene
                 e.printStackTrace();
             }
             Gson gson = new Gson();
-            Log.d("USER", json);
+            Log.d("USER", json + "");
             user = gson.fromJson(json, User.class);
+            Log.d("GETUSER", (System.currentTimeMillis() - time) + "");
             return null;
         }
 
