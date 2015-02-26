@@ -1,7 +1,6 @@
 package com.restomania.restomania;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapShader;
@@ -9,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Shader;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,42 +18,35 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
+import org.jsoup.Jsoup;
+
+import java.io.IOException;
+
 
 public class WaiterActivity extends Activity implements View.OnClickListener {
     String userId;
-    String waiterId;
-    RatingBar rb;
-    EditText reviewEdit;
+    RatingBar waiterRatingbar;
+    EditText waiterReview;
     String token;
+    Waiter waiter;
+    TextView waiterName;
+    ImageView waiterImg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        token = getIntent().getStringExtra("token");
+
         setContentView(R.layout.activity_waiter);
-        TextView n = (TextView) findViewById(R.id.waiter_name);
-        ImageView iw = (ImageView) findViewById(R.id.imView);
+        waiterName = (TextView) findViewById(R.id.waiter_name);
+        waiterImg = (ImageView) findViewById(R.id.waiter_img);
+        waiterReview = (EditText) findViewById(R.id.waiter_review);
+        waiterRatingbar = (RatingBar) findViewById(R.id.waiter_rating_bar);
+        new GetWaiterInfoTask(getIntent().getStringExtra("waiter_id"), token).execute();
+        userId = getIntent().getStringExtra("user_id");
         Button ok = (Button) findViewById(R.id.ok_btn);
-        reviewEdit = (EditText) findViewById(R.id.review);
-        rb = (RatingBar) findViewById(R.id.ratingBar);
-        Intent intent = getIntent();
-        userId = intent.getStringExtra("userId");
-        waiterId = intent.getStringExtra("waiterId");
-        String waiterName = intent.getStringExtra("waiterName");
-        token = intent.getStringExtra("token");
-        n.setText(waiterName);
-        rb.setRating((Float.parseFloat(intent.getStringExtra("waiterRating")) / 2));
-        Bitmap bm = null;
-        //TODO get pictures from internet, save to localdb???
-        if (userId.equals("1"))
-            bm = BitmapFactory.decodeResource(getResources(), R.drawable.w1);
-        if (userId.equals("2"))
-            bm = BitmapFactory.decodeResource(getResources(), R.drawable.m1);
-        if (userId.equals("3"))
-            bm = BitmapFactory.decodeResource(getResources(), R.drawable.m2);
-        if (userId.equals("4"))
-            bm = BitmapFactory.decodeResource(getResources(), R.drawable.m3);
-        bm = getRoundedCornerBitmap(bm, 150);
-        iw.setImageBitmap(bm);
         ok.setOnClickListener(this);
 
     }
@@ -77,13 +70,63 @@ public class WaiterActivity extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        String rating = String.valueOf((int) (rb.getRating() * 2));
-        new UploadingReviewTask().execute(String.valueOf(userId),
-                String.valueOf(waiterId), String.valueOf(rating),
-                reviewEdit.getText().toString(), token);
+        String rating = String.valueOf((int) (waiterRatingbar.getRating() * 2));
+        String rev = waiterReview.getText().toString();
+        //TODO good name of variable,fix rating
+        String rat = String.valueOf((int) waiter.rating);
+        Log.e("PARAMS", token + " " + waiter.id + " " + rev + " " + rat);
+        new UploadingReviewTask().execute(token, String.valueOf(waiter.id), rev, rat);
         Log.d("Rating", "" + rating);
         UserProfileActivity.countReview++;
-        setResult(RESULT_OK, getIntent());
         finish();
+    }
+
+    //TODO how unite this to GetUserInfo?
+    public class GetWaiterInfoTask extends AsyncTask<Void, Void, Void> {
+
+        final String url = "http://104.131.184.188:8080/restoserver/getWaiter?";
+        final String mWaiterId;
+        final String mToken;
+
+
+        GetWaiterInfoTask(String waiterId, String token) {
+            mWaiterId = waiterId;
+            mToken = token;
+        }
+
+        @Override
+        protected Void doInBackground(Void... strings) {
+            String json = null;
+            Log.e("WAITER_ACTIVITY", mWaiterId + " " + mToken + "!!!");
+            try {
+                json = Jsoup.connect(url + "waiterId=" + mWaiterId + "&token=" + mToken).
+                        ignoreContentType(true).execute().body();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Log.e("WAITER_ACTIVITY", json);
+            Gson gson = new Gson();
+            waiter = gson.fromJson(json, Waiter.class);
+            Log.d("WAITER_ACTIVITY", waiter + "");
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(final Void success) {
+            waiterName.setText(waiter.name);
+            waiterRatingbar.setRating(waiter.rating / 2);
+            Bitmap bm = null;
+            //TODO get pictures from internet, save to localdb???
+            if (userId.equals("1"))
+                bm = BitmapFactory.decodeResource(getResources(), R.drawable.w1);
+            if (userId.equals("2"))
+                bm = BitmapFactory.decodeResource(getResources(), R.drawable.m1);
+            if (userId.equals("3"))
+                bm = BitmapFactory.decodeResource(getResources(), R.drawable.m2);
+            if (userId.equals("4"))
+                bm = BitmapFactory.decodeResource(getResources(), R.drawable.m3);
+            bm = getRoundedCornerBitmap(bm, 150);
+            waiterImg.setImageBitmap(bm);
+        }
     }
 }

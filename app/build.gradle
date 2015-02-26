@@ -25,6 +25,11 @@ dependencies {
 
 repositories {
     mavenCentral()
+
+    maven {
+        url "https://raw.github.com/embarkmobile/zxing-android-minimal/mvn-repo/maven-repository/"
+    }
+
 }
 
 dependencies {
@@ -33,5 +38,7 @@ dependencies {
 
 dependencies {
     compile 'org.jsoup:jsoup:1.7.2'
+    compile 'com.google.zxing:core:2.2'
+    compile 'com.embarkmobile:zxing-android-minimal:1.2.1@aar'
 
 }

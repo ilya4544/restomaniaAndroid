@@ -161,7 +161,7 @@ public class AccountAuthenticatorActivity extends Activity {
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
             showProgress(false);
-
+            //TODO problem vith changing intent
             if (success) {
                 Intent intent = new Intent(getApplicationContext(), UserProfileActivity.class);
                 intent.putExtra("token", mToken);

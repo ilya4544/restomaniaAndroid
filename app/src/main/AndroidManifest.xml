@@ -23,9 +23,6 @@
             android:name=".WaiterActivity"
             android:label="Текущий официант" />
         <activity
-            android:name=".WaiterListActivity"
-            android:label="Список официантов" />
-        <activity
             android:name=".UserProfileActivity"
             android:label="Ваш профиль" />
 

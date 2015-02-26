@@ -16,8 +16,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 import org.jsoup.Jsoup;
 
@@ -32,6 +35,9 @@ public class UserProfileActivity extends Activity implements View.OnClickListene
     private TextView balance;
     TextView countReviewText;
     User user;
+    String token;
+    public final int REQUEST_CODE_QR_SCAN = 1;
+    public final int REQUEST_CODE_WAITER = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +52,10 @@ public class UserProfileActivity extends Activity implements View.OnClickListene
         getUserInfoTask.execute((Void) null);
         countReviewText = (TextView) findViewById(R.id.count_review);
         countReviewText.setText("Отзывы:       " + countReview);
-
+        token = getIntent().getStringExtra("token");
 
         bm = getRoundedCornerBitmap(bm, 150);
         iw.setImageBitmap(bm);
-
         rateWaiterButton.setOnClickListener(this);
     }
 
@@ -71,21 +76,9 @@ public class UserProfileActivity extends Activity implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        Intent intent = new Intent(this, WaiterListActivity.class);
-        intent.putExtra("token", user.token);
-        intent.putExtra("userId", user.id);
-        startActivityForResult(intent, 1);
+        IntentIntegrator.initiateScan(this);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (data == null) {
-            return;
-        }
-        countReviewText.setText("Отзывы:       " + countReview);
-        //String name = data.getStringExtra("name");
-        //tvName.setText("Your name is " + name);
-    }
 
     public class GetUserInfoTask extends AsyncTask<Void, Void, Void> {
 
@@ -117,5 +110,28 @@ public class UserProfileActivity extends Activity implements View.OnClickListene
             nameFirst.setText(user.name.split(" ")[0]);
             nameLast.setText(user.name.split(" ")[1]);
         }
+    }
+
+
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        if (requestCode == REQUEST_CODE_WAITER) {
+            return;
+        }
+        // if (requestCode == REQUEST_CODE_QR_SCAN) {
+        IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+        if (scanResult != null) {
+            // handle scan result
+            Toast.makeText(this, scanResult.getContents(), Toast.LENGTH_LONG).show();
+            String waiterId = scanResult.getContents();//for now its int, but let it be String
+            Intent toWaiterInfo = new Intent(this, WaiterActivity.class);
+            toWaiterInfo.putExtra("waiter_id", waiterId);
+            toWaiterInfo.putExtra("token", token);
+            toWaiterInfo.putExtra("user_id", user.id);
+            startActivityForResult(toWaiterInfo, REQUEST_CODE_WAITER);
+        } else
+            Toast.makeText(this, "Check internet and camera and try again. ", Toast.LENGTH_LONG).show();
+        // else continue with any other code you need in the method
+        //}
+
     }
 }

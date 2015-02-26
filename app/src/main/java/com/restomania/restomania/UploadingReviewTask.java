@@ -28,11 +28,11 @@ public class UploadingReviewTask extends AsyncTask<String, Void, Void> {
         HttpClient httpclient = new DefaultHttpClient();
         HttpPost http = new HttpPost(url + "vote");
         List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-        nameValuePairs.add(new BasicNameValuePair("token", strings[4]));
-        nameValuePairs.add(new BasicNameValuePair("userId", strings[0]));
+        nameValuePairs.add(new BasicNameValuePair("token", strings[0]));
         nameValuePairs.add(new BasicNameValuePair("waiterId", strings[1]));
-        nameValuePairs.add(new BasicNameValuePair("rating", strings[2]));
-        nameValuePairs.add(new BasicNameValuePair("review", strings[3]));
+        nameValuePairs.add(new BasicNameValuePair("review", strings[2]));
+        nameValuePairs.add(new BasicNameValuePair("rating", strings[3]));
+
         try {
             http.setEntity(new UrlEncodedFormEntity(nameValuePairs));
             HttpResponse response = httpclient.execute(http);
@@ -43,10 +43,11 @@ public class UploadingReviewTask extends AsyncTask<String, Void, Void> {
                 total.append(line);
 
             }
-            Log.d("Responce", total.toString());
+            Log.e("Responce", total.toString());
         } catch (Exception e) {
             e.printStackTrace();
         }
+        Log.d("UPLOADING", "Success??");
         return null;
     }
 
