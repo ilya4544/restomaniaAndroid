@@ -2,7 +2,7 @@ TODO
 
 Android application:
 - [ ] !!Fix encoding trouble (to UTF-8)
-- [ ] Replace waiters list with QR code scanner
+- [x] Replace waiters list with QR code scanner
 - [ ] UI: Android Sherlock Bar (http://actionbarsherlock.com/)
 - [ ] UI: http://android.inspired-ui.com/ read this
 - [ ] UI: and this http://www.androidpatterns.com/
