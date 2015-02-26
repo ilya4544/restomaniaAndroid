@@ -10,14 +10,14 @@ Android application:
 - [ ] Localization(at least English/Russian)
 
 Server:
-- [ ] Generate QR code (and may be keep)
+- [x] Generate QR code (and may be keep)
 - [x] Authentification
 - [ ] Payment gate
-- [ ] Good calculate rating
-- [ ] !!Fix error 500
+- [x] Good calculate rating
+- [x] !!Fix error 500
 
 Both:
-- [ ] Column reviewCount to users
+- [x] Column reviewCount to users
 - [ ] User and waiter's avatars 
 
 JSP:
