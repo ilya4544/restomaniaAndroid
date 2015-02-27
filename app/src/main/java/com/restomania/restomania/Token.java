@@ -1,12 +1,12 @@
 package com.restomania.restomania;
 
 /**
- * Created by Freemahn on 01.11.2014.
+ * Created by Freemahn on 27.02.2015.
  */
 public class Token {
-    public String token;
+    String token;
 
-    public Token(String t) {
-        token = t;
+    public Token(String token) {
+        this.token = token;
     }
 }

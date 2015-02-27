@@ -55,6 +55,8 @@ public class AccountAuthenticatorActivity extends Activity {
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
         //loginFromDB = "pavel"; hash = "123";
+        if (loadToken()) toUserProfile();
+
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,31 +73,23 @@ public class AccountAuthenticatorActivity extends Activity {
     }
 
 
-/*
-    void saveTokenAndUser() {
+    void saveToken() {
         sPref = getPreferences(MODE_PRIVATE);
         SharedPreferences.Editor ed = sPref.edit();
-        ed.putString("token", user.token);
-        ed.putString("id", user.id);
-        ed.putString("name", user.name);
-        ed.putString("login", user.login);
-        ed.putString("hash", user.hash);
-        ed.putFloat("balance", user.balance);
+        ed.putString("token", mToken);
         ed.commit();
 
-    }*/
-/*
-    boolean loadTokenAndUser() {
-        sPref = getPreferences(MODE_PRIVATE);
-        user.token = sPref.getString("token", "");
-        user.id = sPref.getString("id", "");
-        user.name = sPref.getString("name", "");
-        user.login = sPref.getString("login", "");
-        user.hash = sPref.getString("hash", "");
-        user.balance = sPref.getFloat("balance", 0.0f);
-        return !user.token.equals("");
+    }
 
-    }*/
+    boolean loadToken() {
+        sPref = getPreferences(MODE_PRIVATE);
+        mToken = sPref.getString("token", "");
+        return !mToken.equals("");
+    }
+
+    String getToken() {
+        return getPreferences(MODE_PRIVATE).getString("token", "");
+    }
 
 
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
@@ -117,14 +111,12 @@ public class AccountAuthenticatorActivity extends Activity {
         @Override
         protected Boolean doInBackground(Void... strings) {
             try {
-                long time = System.currentTimeMillis();
                 List<NameValuePair> list = new ArrayList<>();
                 list.add(new BasicNameValuePair("login", mLogin));
                 list.add(new BasicNameValuePair("hash", mPassword));
                 String answer = makePostRequest("http://104.131.184.188:8080/restoserver/signIn", list);
                 Gson gson = new Gson();
                 mToken = gson.fromJson(answer, Token.class).token;
-                Log.d("ACCOUNT", (System.currentTimeMillis() - time) + "");
             } catch (Exception e) {
                 Toast.makeText(getApplicationContext(), "Error " + e, Toast.LENGTH_LONG).show();
                 onCancelled();
@@ -161,14 +153,14 @@ public class AccountAuthenticatorActivity extends Activity {
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
             showProgress(false);
+
             //TODO problem vith changing intent
             if (success) {
-                Intent intent = new Intent(getApplicationContext(), UserProfileActivity.class);
-                intent.putExtra("token", mToken);
-                startActivity(intent);
+                saveToken();
+                toUserProfile();
                 finish();
             } else {
-                //mPasswordView.setError(getString(R.string.error_incorrect_password));
+                mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
             }
         }
@@ -179,6 +171,12 @@ public class AccountAuthenticatorActivity extends Activity {
             showProgress(false);
         }
 
+    }
+
+    void toUserProfile() {
+        Intent intent = new Intent(getApplicationContext(), UserProfileActivity.class);
+        intent.putExtra("token", mToken);
+        startActivity(intent);
     }
 
 

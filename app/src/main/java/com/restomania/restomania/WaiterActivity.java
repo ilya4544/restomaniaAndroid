@@ -73,7 +73,7 @@ public class WaiterActivity extends Activity implements View.OnClickListener {
         String rating = String.valueOf((int) (waiterRatingbar.getRating() * 2));
         String rev = waiterReview.getText().toString();
         //TODO good name of variable,fix rating
-        String rat = String.valueOf((int) waiter.rating);
+        String rat = String.valueOf((int) waiter.rating * 2);
         Log.e("PARAMS", token + " " + waiter.id + " " + rev + " " + rat);
         new UploadingReviewTask().execute(token, String.valueOf(waiter.id), rev, rat);
         Log.d("Rating", "" + rating);
