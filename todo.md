@@ -1,13 +1,14 @@
 TODO 
 
 Android application:
-- [ ] !!Fix encoding trouble (to UTF-8)
+- [x] !!Fix encoding problems (to UTF-8)
 - [x] Replace waiters list with QR code scanner
 - [ ] UI: Android Sherlock Bar (http://actionbarsherlock.com/)
 - [ ] UI: http://android.inspired-ui.com/ read this
 - [ ] UI: and this http://www.androidpatterns.com/
 - [x] ?Material design( from Google for new Android)
 - [ ] Localization(at least English/Russian)
+- [ ] Sign Up
 
 Server:
 - [x] Generate QR code (and may be keep)
@@ -15,6 +16,7 @@ Server:
 - [ ] Payment gate
 - [x] Good calculate rating
 - [x] !!Fix error 500
+- [x] Fix encoding problems
 
 Both:
 - [x] Column reviewCount to users
