@@ -19,7 +19,7 @@
     <ScrollView
         android:id="@+id/login_form"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="1">
 
         <LinearLayout
@@ -40,11 +40,20 @@
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:ems="10"
+                android:id="@+id/textName"
+                android:layout_gravity="center_horizontal"
+                android:hint="Введите ваше имя"
+                android:textColorHint="@android:color/black" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:ems="10"
                 android:id="@+id/textLogin"
                 android:layout_gravity="center_horizontal"
                 android:hint="Введите логин"
-                android:textColorHint="@android:color/black"
-                android:text="pavel" />
+                android:textColorHint="@android:color/black" />
 
             <EditText
                 android:layout_width="wrap_content"
@@ -55,7 +64,17 @@
                 android:layout_gravity="center_horizontal"
                 android:hint="Введите пароль"
                 android:textColorHint="@android:color/black"
-                android:text="123"
+                android:password="false" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:id="@+id/textRepeatPassword"
+                android:layout_gravity="center_horizontal"
+                android:hint="Повторите пароль"
+                android:textColorHint="@android:color/black"
                 android:password="false" />
 
         </LinearLayout>
@@ -64,8 +83,8 @@
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Войти"
-        android:id="@+id/login_btn"
+        android:text="Зарегистрироваться"
+        android:id="@+id/btnRegister"
         android:layout_gravity="center_horizontal"
         android:layout_weight="1" />
 </LinearLayout>

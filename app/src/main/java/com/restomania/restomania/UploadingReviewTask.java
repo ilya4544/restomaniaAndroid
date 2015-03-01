@@ -4,12 +4,16 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpVersion;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpParams;
+import org.apache.http.params.HttpProtocolParams;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -25,7 +29,12 @@ public class UploadingReviewTask extends AsyncTask<String, Void, Void> {
 
     @Override
     protected Void doInBackground(String... strings) {
-        HttpClient httpclient = new DefaultHttpClient();
+        HttpParams params = new BasicHttpParams();
+        HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
+        HttpProtocolParams.setContentCharset(params, "utf-8");
+
+        HttpClient httpclient = new DefaultHttpClient(params);
+        httpclient.getParams().setParameter("http.protocol.content-charset", "UTF-8");
         HttpPost http = new HttpPost(url + "vote");
         List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
         nameValuePairs.add(new BasicNameValuePair("token", strings[0]));
@@ -34,7 +43,7 @@ public class UploadingReviewTask extends AsyncTask<String, Void, Void> {
         nameValuePairs.add(new BasicNameValuePair("rating", strings[3]));
 
         try {
-            http.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+            http.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
             HttpResponse response = httpclient.execute(http);
             String line = "";
             StringBuilder total = new StringBuilder();
@@ -43,11 +52,11 @@ public class UploadingReviewTask extends AsyncTask<String, Void, Void> {
                 total.append(line);
 
             }
-            Log.e("Responce", total.toString());
+            Log.e("Response", total.toString());
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Log.d("UPLOADING", "Success??");
+        Log.d("UPLOADING", "Success");
         return null;
     }
 

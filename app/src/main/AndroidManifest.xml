@@ -12,19 +12,23 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".AccountAuthenticatorActivity"
-            android:label="Restomania">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:label="Вход в аккаунт"></activity>
         <activity
             android:name=".WaiterActivity"
             android:label="Текущий официант" />
         <activity
             android:name=".UserProfileActivity"
             android:label="Ваш профиль" />
+        <activity
+            android:name=".RegisterActivity"
+            android:label="Регистрация нового пользователя">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
 
     </application>
 

@@ -20,7 +20,6 @@
             android:id="@+id/waiter_img" />
 
         <TextView
-            android:text="Jennifer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/waiter_name"
@@ -73,7 +72,7 @@
         <Button
             android:layout_width="fill_parent"
             android:layout_height="60dp"
-            android:text="Rate"
+            android:text="Оценить"
             android:id="@+id/ok_btn"
             android:background="#0099CC" />
     </LinearLayout>

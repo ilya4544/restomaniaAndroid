@@ -54,22 +54,22 @@ public class AccountAuthenticatorActivity extends Activity {
         mPasswordView = (EditText) findViewById(R.id.textPassword);
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
-        //loginFromDB = "pavel"; hash = "123";
-        if (loadToken()) toUserProfile();
+
+        if (getIntent() != null) {
+            String login = getIntent().getStringExtra("login");
+            String hash = getIntent().getStringExtra("hash");
+            attemptLogin(login, hash);
+        } else {
+            if (loadToken()) toUserProfile();
+        }
 
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                attemptLogin();
+                attemptLogin(null, null);
             }
         });
 
-    }
-
-
-    //TODO stub
-    public String hash(String strToHash) {
-        return strToHash;
     }
 
 
@@ -122,7 +122,7 @@ public class AccountAuthenticatorActivity extends Activity {
                 onCancelled();
             }
             //TODO what if not such user? need to create
-            return !mToken.equals("");
+            return !(mToken == null || mToken.equals(""));
         }
 
         public String makePostRequest(String url, List<NameValuePair> nameValuePairs) {
@@ -180,9 +180,14 @@ public class AccountAuthenticatorActivity extends Activity {
     }
 
 
-    public void attemptLogin() {
+    public void attemptLogin(String login, String hash) {
         if (mAuthTask != null) {
             return;
+        }
+        if (login != null && hash != null) {
+            showProgress(true);
+            mAuthTask = new UserLoginTask(login, hash);
+            mAuthTask.execute((Void) null);
         }
 
         // Reset errors.
@@ -223,7 +228,7 @@ public class AccountAuthenticatorActivity extends Activity {
             // perform the user login attempt.
 
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
+            mAuthTask = new UserLoginTask(email, PasswordHash.createHash(login, password));
             mAuthTask.execute((Void) null);
         }
     }
