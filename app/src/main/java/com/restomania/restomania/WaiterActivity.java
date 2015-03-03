@@ -26,27 +26,27 @@ import java.io.IOException;
 
 
 public class WaiterActivity extends Activity implements View.OnClickListener {
-    String userId;
-    RatingBar waiterRatingbar;
-    EditText waiterReview;
-    String token;
-    Waiter waiter;
-    TextView waiterName;
-    ImageView waiterImg;
+    private String userId;
+    private RatingBar waiterRatingbar;
+    private EditText waiterReview;
+    private String mToken;
+    private Waiter waiter;
+    private TextView waiterName;
+    private ImageView waiterImg;
+    private static String TAG = "WaiterActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        token = getIntent().getStringExtra("token");
-
+        mToken = getIntent().getStringExtra("token");
         setContentView(R.layout.activity_waiter);
-        waiterName = (TextView) findViewById(R.id.waiter_name);
-        waiterImg = (ImageView) findViewById(R.id.waiter_img);
-        waiterReview = (EditText) findViewById(R.id.waiter_review);
-        waiterRatingbar = (RatingBar) findViewById(R.id.waiter_rating_bar);
-        new GetWaiterInfoTask(getIntent().getStringExtra("waiter_id"), token).execute();
+        waiterName = (TextView) findViewById(R.id.text_waiter_name);
+        waiterImg = (ImageView) findViewById(R.id.img_waiter);
+        waiterReview = (EditText) findViewById(R.id.text_waiter_review);
+        waiterRatingbar = (RatingBar) findViewById(R.id.rating_bar_waiter);
+        new GetWaiterInfoTask(getIntent().getStringExtra("waiter_id"), mToken).execute();
         userId = getIntent().getStringExtra("user_id");
-        Button ok = (Button) findViewById(R.id.ok_btn);
+        Button ok = (Button) findViewById(R.id.btn_send_review);
         ok.setOnClickListener(this);
 
     }
@@ -74,9 +74,9 @@ public class WaiterActivity extends Activity implements View.OnClickListener {
         String rev = waiterReview.getText().toString();
         //TODO good name of variable,fix rating
         String rat = String.valueOf((int) waiter.rating * 2);
-        Log.e("PARAMS", token + " " + waiter.id + " " + rev + " " + rat);
-        new UploadingReviewTask().execute(token, String.valueOf(waiter.id), rev, rat);
-        Log.d("Rating", "" + rating);
+        Log.e(TAG, "args:" + mToken + " " + waiter.id + " " + rev + " " + rat);
+        new UploadingReviewTask().execute(mToken, String.valueOf(waiter.id), rev, rat);
+        //Log.d("Rating", "" + rating);
         UserProfileActivity.countReview++;
         finish();
     }
@@ -99,7 +99,7 @@ public class WaiterActivity extends Activity implements View.OnClickListener {
             String json = null;
             Log.e("WAITER_ACTIVITY", mWaiterId + " " + mToken + "!!!");
             try {
-                json = Jsoup.connect(url + "waiterId=" + mWaiterId + "&token=" + mToken).
+                json = Jsoup.connect(url + "waiterId=" + mWaiterId + "&mToken=" + mToken).
                         ignoreContentType(true).execute().body();
             } catch (IOException e) {
                 e.printStackTrace();

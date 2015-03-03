@@ -15,31 +15,31 @@
         android:orientation="vertical">
 
         <ImageView
+            android:id="@+id/image_logo"
             android:layout_width="195dp"
             android:layout_height="222dp"
-            android:id="@+id/logo_view"
             android:layout_centerHorizontal="true"
             android:src="@drawable/logo"
             android:layout_gravity="center_horizontal" />
 
         <EditText
+            android:id="@+id/text_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="text"
             android:ems="10"
-            android:id="@+id/textLogin"
             android:layout_gravity="center_horizontal"
-            android:hint="Введите логин"
+            android:hint="@string/enter_login"
             android:textColorHint="@android:color/black" />
 
         <EditText
+            android:id="@+id/text_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:ems="10"
-            android:id="@+id/textPassword"
             android:layout_gravity="center_horizontal"
-            android:hint="Введите пароль"
+            android:hint="@string/enter_password"
             android:textColorHint="@android:color/black" />
 
     </LinearLayout>
@@ -47,7 +47,7 @@
     <com.dd.processbutton.iml.ActionProcessButton
         android:layout_width="200dp"
         android:layout_height="60dp"
-        android:text="Войти"
+        android:text="@string/sign_in"
         android:id="@+id/btn_login"
         android:layout_gravity="center_horizontal"
         custom:pb_colorComplete="@color/green_complete"
@@ -68,8 +68,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Еще нет аккаунта?"
-            android:id="@+id/textView"
+            android:text="@string/has_no_account"
             android:layout_weight="0.5"
             android:gravity="right"
             android:textSize="20dp"
@@ -77,17 +76,16 @@
             android:layout_gravity="center" />
 
         <TextView
+            android:id="@+id/text_to_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/link_create"
-            android:id="@+id/tw_to_register"
             android:layout_weight="0.5"
             android:textSize="20dp"
             android:linksClickable="true"
             android:clickable="true"
             android:elegantTextHeight="false"
-            android:layout_gravity="center"
-            android:capitalize="sentences" />
+            android:layout_gravity="center" />
     </LinearLayout>
 
 

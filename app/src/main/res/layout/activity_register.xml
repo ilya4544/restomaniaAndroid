@@ -12,53 +12,55 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:orientation="vertical">
 
         <ImageView
+            android:id="@+id/image_logo"
             android:layout_width="195dp"
             android:layout_height="222dp"
-            android:id="@+id/logo_view"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/logo"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/logo" />
 
         <EditText
+            android:id="@+id/text_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:inputType="text"
             android:ems="10"
-            android:id="@+id/textName"
-            android:layout_gravity="center_horizontal"
-            android:hint="Введите ваше имя"
+            android:hint="@string/enter_name"
             android:textColorHint="@android:color/black" />
 
         <EditText
+            android:id="@+id/text_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:inputType="text"
             android:ems="10"
-            android:id="@+id/textLogin"
-            android:layout_gravity="center_horizontal"
-            android:hint="Введите логин"
+            android:hint="@string/enter_password"
             android:textColorHint="@android:color/black" />
 
         <EditText
+            android:id="@+id/text_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:inputType="textPassword"
             android:ems="10"
-            android:id="@+id/textPassword"
-            android:layout_gravity="center_horizontal"
-            android:hint="Введите пароль"
+            android:hint="@string/enter_password"
             android:textColorHint="@android:color/black"
             android:password="false" />
 
         <com.dd.processbutton.iml.ActionProcessButton
+            android:id="@+id/btn_register"
             android:layout_width="200dp"
             android:layout_height="60dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
             android:text="Зарегистрироваться"
-            android:id="@+id/btnRegister"
             custom:pb_colorComplete="@color/green_complete"
             custom:pb_colorNormal="@color/blue_normal"
             custom:pb_colorPressed="@color/blue_pressed"
@@ -66,9 +68,7 @@
             custom:pb_textComplete="Success"
             custom:pb_textProgress="Loading"
             custom:pb_textError="Error"
-            custom:pb_colorError="@color/red_error"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp" />
+            custom:pb_colorError="@color/red_error" />
 
     </LinearLayout>
 

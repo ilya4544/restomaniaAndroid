@@ -40,14 +40,14 @@ public class UserProfileActivity extends Activity implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
-        Button rateWaiterButton = (Button) findViewById(R.id.button);
-        ImageView iw = (ImageView) findViewById(R.id.imageView);
+        Button rateWaiterButton = (Button) findViewById(R.id.btn_rate);
+        ImageView iw = (ImageView) findViewById(R.id.img_user);
         Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.m1);
-        nameFirst = (TextView) findViewById(R.id.name1);
-        nameLast = (TextView) findViewById(R.id.name2);
+        nameFirst = (TextView) findViewById(R.id.text_name_first);
+        nameLast = (TextView) findViewById(R.id.text_name_second);
         GetUserInfoTask getUserInfoTask = new GetUserInfoTask(getIntent().getStringExtra("token"));
         getUserInfoTask.execute((Void) null);
-        countReviewText = (TextView) findViewById(R.id.count_review);
+        countReviewText = (TextView) findViewById(R.id.text_count_review);
         countReviewText.setText("Отзывы:       " + countReview);
         token = getIntent().getStringExtra("token");
 
@@ -106,7 +106,7 @@ public class UserProfileActivity extends Activity implements View.OnClickListene
         @Override
         protected void onPostExecute(final Void success) {
             nameFirst.setText(user.name.split(" ")[0]);
-            nameLast.setText(user.name.split(" ")[1]);
+            //nameLast.setText(user.name.split(" ")[1]);
         }
     }
 

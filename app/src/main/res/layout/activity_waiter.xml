@@ -14,66 +14,64 @@
         android:background="#ff33b5e5">
 
         <ImageView
+            android:id="@+id/img_waiter"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/w1"
-            android:id="@+id/waiter_img" />
+            android:src="@drawable/w1" />
 
         <TextView
+            android:id="@+id/text_waiter_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/waiter_name"
-            android:textSize="40dp"
-
             android:layout_gravity="left"
             android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true" />
-
+            android:layout_alignParentEnd="true"
+            android:textSize="40dp" />
     </RelativeLayout>
 
     <LinearLayout
         android:padding="@dimen/activity_horizontal_margin"
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <RatingBar
+            android:id="@+id/rating_bar_waiter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/waiter_rating_bar"
             android:layout_gravity="center" />
     </LinearLayout>
 
     <LinearLayout
         android:padding="@dimen/activity_horizontal_margin"
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/waiter_review"
-            android:hint="Добавьте отзыв"
+            android:layout_gravity="center"
+            android:id="@+id/text_waiter_review"
+            android:hint="@string/add_review"
             android:editable="true"
             android:paddingBottom="5dp"
-            android:enabled="true"
-            android:layout_gravity="center" />
+            android:enabled="true" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
         android:layout_height="match_parent"
         android:layout_gravity="bottom"
+        android:orientation="vertical"
         android:gravity="bottom"
         android:padding="@dimen/activity_horizontal_margin">
 
         <Button
+            android:id="@+id/btn_send_review"
             android:layout_width="fill_parent"
             android:layout_height="60dp"
-            android:text="Оценить"
-            android:id="@+id/ok_btn"
+            android:text="@string/rate"
             android:background="#0099CC" />
     </LinearLayout>
 </LinearLayout>

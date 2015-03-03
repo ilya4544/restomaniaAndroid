@@ -24,18 +24,21 @@ import java.io.IOException;
  * Created by Freemahn on 01.03.2015.
  */
 public class RegisterActivity extends Activity implements View.OnClickListener {
-    EditText textName, textLogin, textPass;
+    private EditText textName;
+    private EditText textLogin;
+    private EditText textPass;
     private ActionProcessButton btnRegister;
+    private UserRegisterTask mAuthTask = null;
     private static String TAG = "REGISTER";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        textName = (EditText) findViewById(R.id.textName);
-        textLogin = (EditText) findViewById(R.id.textLogin);
-        textPass = (EditText) findViewById(R.id.textPassword);
-        btnRegister = (ActionProcessButton) findViewById(R.id.btnRegister);
+        textName = (EditText) findViewById(R.id.text_name);
+        textLogin = (EditText) findViewById(R.id.text_login);
+        textPass = (EditText) findViewById(R.id.text_password);
+        btnRegister = (ActionProcessButton) findViewById(R.id.btn_register);
         btnRegister.setMode(ActionProcessButton.Mode.ENDLESS);
         btnRegister.setOnClickListener(this);
     }
@@ -47,10 +50,11 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
     }
 
     public void attemptRegister() {
-        btnRegister.setProgress(1);
+
         if (mAuthTask != null) {
             return;
         }
+
 
         String name = textName.getText().toString();
         String login = textLogin.getText().toString();
@@ -72,13 +76,16 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
         private final String mLogin;
         private final String mHash;
         private final String mName;
+        OkHttpClient client;
+
         public final MediaType JSON
-                = MediaType.parse("application/json; charset=utf-8");
+                = MediaType.parse("application/x-www-form-urlencoded");
 
         UserRegisterTask(String login, String hash, String name) {
             mLogin = login;
             mHash = hash;
             mName = name;
+            client = new OkHttpClient();
         }
 
         @Override
@@ -87,7 +94,6 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
             btnRegister.setProgress(1);
         }
 
-        OkHttpClient client = new OkHttpClient();
 
         //true if success
         @Override
@@ -95,8 +101,9 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
             String url = "http://104.131.184.188:8080/restoserver/signUp";
             String answer = null;
             try {
-                Thread.sleep(1000);
-                answer = post(url, bowlingJson());
+
+                answer = post(url, bowlingParams());
+                Log.d(TAG, "Request " + bowlingParams());
                 Log.d(TAG, "Response " + answer);
                 JSONObject ans = new JSONObject(answer);
                 if (ans.has("error")) {
@@ -116,6 +123,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
                     .url(url)
                     .post(body)
                     .build();
+            Log.d(TAG, "REQUEST " + request.body().contentLength() + " " + mLogin + " " + mHash);
             Response response = client.newCall(request).execute();
             return response.body().string();
         }
@@ -123,8 +131,13 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
         String bowlingJson() {
             return "{'login':'" + mLogin + "',"
                     + "'hash':'" + mHash + "',"
-                    + "'name':" + mName +
-                    "'}";
+                    + "'name':'" + mName + "'}";
+        }
+
+        String bowlingParams() {
+            return "login=" + mLogin + "&"
+                    + "hash=" + mHash + "&"
+                    + "name=" + mName;
         }
 
         @Override
@@ -153,5 +166,5 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
         }
     }
 
-    private UserRegisterTask mAuthTask = null;
+
 }

@@ -15,5 +15,12 @@
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
     <string name="link_create"><u>Создать</u></string>
+    <string name="enter_login">Введите логин</string>
+    <string name="enter_password">Введите пароль</string>
+    <string name="sign_in">Войти</string>
+    <string name="has_no_account">Еще нет аккаунта?</string>
+    <string name="enter_name">Введите ваше имя</string>
+    <string name="add_review">Добавьте отзыв</string>
+    <string name="rate">Оценить</string>
 
 </resources>

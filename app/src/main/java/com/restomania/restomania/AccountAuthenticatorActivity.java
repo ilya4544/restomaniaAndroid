@@ -31,24 +31,24 @@ import java.util.List;
 public class AccountAuthenticatorActivity extends Activity {
 
     private static String TAG = "AccountAuthenicator";
-    SharedPreferences sPref;
-    String mToken;
+    private SharedPreferences sPref;
+    private String mToken;
     private UserLoginTask mAuthTask = null;
 
     // UI references.
     private EditText mLoginView;
     private EditText mPasswordView;
-    private ActionProcessButton signInButton;
+    private ActionProcessButton mSignInButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        signInButton = (ActionProcessButton) findViewById(R.id.btn_login);
-        signInButton.setMode(ActionProcessButton.Mode.ENDLESS);
-        mLoginView = (EditText) findViewById(R.id.textLogin);
-        mPasswordView = (EditText) findViewById(R.id.textPassword);
-        TextView tw = (TextView) findViewById(R.id.tw_to_register);
+        mSignInButton = (ActionProcessButton) findViewById(R.id.btn_login);
+        mSignInButton.setMode(ActionProcessButton.Mode.ENDLESS);
+        mLoginView = (EditText) findViewById(R.id.text_login);
+        mPasswordView = (EditText) findViewById(R.id.text_password);
+        TextView tw = (TextView) findViewById(R.id.text_to_register);
         tw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,7 +60,7 @@ public class AccountAuthenticatorActivity extends Activity {
 
         // if (loadToken()) toUserProfile();
 
-        signInButton.setOnClickListener(new View.OnClickListener() {
+        mSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 attemptLogin(null, null);
@@ -83,7 +83,7 @@ public class AccountAuthenticatorActivity extends Activity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            signInButton.setProgress(1);
+            mSignInButton.setProgress(50);
         }
 
         //true if success
@@ -134,12 +134,12 @@ public class AccountAuthenticatorActivity extends Activity {
             mAuthTask = null;
             Log.d(TAG, "success " + success);
             if (success) {
-                signInButton.setProgress(100);
+                mSignInButton.setProgress(100);
                 saveToken();
                 toUserProfile();
                 //finish();
             } else {
-                signInButton.setProgress(-1);
+                mSignInButton.setProgress(-1);
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
             }
@@ -179,7 +179,7 @@ public class AccountAuthenticatorActivity extends Activity {
 
 
         // Check for a valid password, if the user entered one.
-        if (password == null || password.equals("") || !isPasswordValid(password)) {
+        if (TextUtils.isEmpty(password) || !isPasswordValid(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
@@ -195,13 +195,14 @@ public class AccountAuthenticatorActivity extends Activity {
             focusView = mLoginView;
             cancel = true;
         }
-        hash = PasswordHash.createHash(login, password);
-        Log.d(TAG, "args:" + login + " " + password + " " + hash);
+
         if (cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
             focusView.requestFocus();
         } else {
+            hash = PasswordHash.createHash(login, password);
+            Log.d(TAG, "Going to userlogintask, args:" + login + " " + password + " " + hash);
             mAuthTask = new UserLoginTask(login, hash);
             mAuthTask.execute((Void) null);
         }
@@ -213,7 +214,8 @@ public class AccountAuthenticatorActivity extends Activity {
         if (data == null) return;
         String login = data.getStringExtra("login");
         String hash = data.getStringExtra("hash");
-        attemptLogin(login, hash);
+        mAuthTask = new UserLoginTask(login, hash);
+        mAuthTask.execute((Void) null);
     }
 
     void saveToken() {
