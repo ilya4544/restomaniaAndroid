@@ -12,7 +12,14 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".AccountAuthenticatorActivity"
-            android:label="Вход в аккаунт"></activity>
+            android:label="Вход в аккаунт">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
         <activity
             android:name=".WaiterActivity"
             android:label="Текущий официант" />
@@ -23,10 +30,6 @@
             android:name=".RegisterActivity"
             android:label="Регистрация нового пользователя">
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
         </activity>
 

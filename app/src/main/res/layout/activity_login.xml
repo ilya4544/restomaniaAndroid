@@ -1,5 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.restomania.restomania.AccountAuthenticatorActivity"
@@ -7,65 +8,87 @@
     android:weightSum="1">
 
     <!-- Login progress -->
-    <ProgressBar
-        android:id="@+id/login_progress"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:visibility="gone"
-        android:layout_weight="1" />
 
-    <ScrollView
-        android:id="@+id/login_form"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <ImageView
+            android:layout_width="195dp"
+            android:layout_height="222dp"
+            android:id="@+id/logo_view"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/logo"
+            android:layout_gravity="center_horizontal" />
+
+        <EditText
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:inputType="text"
+            android:ems="10"
+            android:id="@+id/textLogin"
+            android:layout_gravity="center_horizontal"
+            android:hint="Введите логин"
+            android:textColorHint="@android:color/black" />
 
-            <ImageView
-                android:layout_width="246dp"
-                android:layout_height="280dp"
-                android:id="@+id/logo_view"
-                android:layout_centerHorizontal="true"
-                android:src="@drawable/logo"
-                android:layout_gravity="center_horizontal" />
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:id="@+id/textPassword"
+            android:layout_gravity="center_horizontal"
+            android:hint="Введите пароль"
+            android:textColorHint="@android:color/black" />
 
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:ems="10"
-                android:id="@+id/textLogin"
-                android:layout_gravity="center_horizontal"
-                android:hint="Введите логин"
-                android:textColorHint="@android:color/black"
-                android:text="pavel" />
+    </LinearLayout>
 
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:ems="10"
-                android:id="@+id/textPassword"
-                android:layout_gravity="center_horizontal"
-                android:hint="Введите пароль"
-                android:textColorHint="@android:color/black"
-                android:text="123"
-                android:password="false" />
+    <com.dd.processbutton.iml.ActionProcessButton
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:text="Войти"
+        android:id="@+id/btn_login"
+        android:layout_gravity="center_horizontal"
+        custom:pb_colorComplete="@color/green_complete"
+        custom:pb_colorNormal="@color/blue_normal"
+        custom:pb_colorPressed="@color/blue_pressed"
+        custom:pb_colorProgress="@color/purple_progress"
+        custom:pb_textComplete="Success"
+        custom:pb_textProgress="Loading"
+        custom:pb_textError="Error"
+        custom:pb_colorError="@color/red_error" />
 
-        </LinearLayout>
-    </ScrollView>
-
-    <Button
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Войти"
-        android:id="@+id/login_btn"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="1" />
+        android:layout_weight="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Еще нет аккаунта?"
+            android:id="@+id/textView"
+            android:layout_weight="0.5"
+            android:gravity="right"
+            android:textSize="20dp"
+            android:clickable="false"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/link_create"
+            android:id="@+id/tw_to_register"
+            android:layout_weight="0.5"
+            android:textSize="20dp"
+            android:linksClickable="true"
+            android:clickable="true"
+            android:elegantTextHeight="false"
+            android:layout_gravity="center"
+            android:capitalize="sentences" />
+    </LinearLayout>
+
+
 </LinearLayout>

@@ -51,7 +51,7 @@ public class PasswordHash {
 
     static String createHash(String login, String password) {
         byte[] salt = md5(login).getBytes();
-        KeySpec spec = new PBEKeySpec("password".toCharArray(), salt, 65536, 128);
+        KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 128);
         SecretKeyFactory f = null;
         byte[] hash = null;
         try {
@@ -68,14 +68,14 @@ public class PasswordHash {
 
     }
 
-    public static String md5(final String s) {
+    public static String md5(String s) {
         try {
             byte[] bytesOfMessage = s.getBytes("UTF-8");
             MessageDigest m = MessageDigest.getInstance("MD5");
             byte[] thedigest = m.digest(bytesOfMessage);
             return new BigInteger(1, thedigest).toString(16);
         } catch (Exception e) {
-            Log.e("Error while hashing", e.toString());
+            Log.e("Error while hashing", e.toString() + " " + s);
         }
         return null;
     }

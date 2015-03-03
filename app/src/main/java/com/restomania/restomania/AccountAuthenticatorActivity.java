@@ -1,21 +1,17 @@
 package com.restomania.restomania;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.TextView;
 
+import com.dd.processbutton.iml.ActionProcessButton;
 import com.google.gson.Gson;
 
 import org.apache.http.HttpResponse;
@@ -34,34 +30,35 @@ import java.util.List;
 //first activity, sign in user, then go to his/her profile
 public class AccountAuthenticatorActivity extends Activity {
 
-
+    private static String TAG = "AccountAuthenicator";
     SharedPreferences sPref;
     String mToken;
     private UserLoginTask mAuthTask = null;
 
     // UI references.
-    private EditText mEmailView;
+    private EditText mLoginView;
     private EditText mPasswordView;
-    private View mProgressView;
-    private View mLoginFormView;
+    private ActionProcessButton signInButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        Button signInButton = (Button) findViewById(R.id.login_btn);
-        mEmailView = (EditText) findViewById(R.id.textLogin);
+        signInButton = (ActionProcessButton) findViewById(R.id.btn_login);
+        signInButton.setMode(ActionProcessButton.Mode.ENDLESS);
+        mLoginView = (EditText) findViewById(R.id.textLogin);
         mPasswordView = (EditText) findViewById(R.id.textPassword);
-        mLoginFormView = findViewById(R.id.login_form);
-        mProgressView = findViewById(R.id.login_progress);
+        TextView tw = (TextView) findViewById(R.id.tw_to_register);
+        tw.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
+                startActivityForResult(intent, 1);
+            }
+        });
 
-        if (getIntent() != null) {
-            String login = getIntent().getStringExtra("login");
-            String hash = getIntent().getStringExtra("hash");
-            attemptLogin(login, hash);
-        } else {
-            if (loadToken()) toUserProfile();
-        }
+
+        // if (loadToken()) toUserProfile();
 
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,6 +69,152 @@ public class AccountAuthenticatorActivity extends Activity {
 
     }
 
+
+    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+
+        private final String mLogin;
+        private final String mHash;
+
+        UserLoginTask(String login, String password) {
+            mLogin = login;
+            mHash = password;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            signInButton.setProgress(1);
+        }
+
+        //true if success
+        @Override
+        protected Boolean doInBackground(Void... strings) {
+            try {
+                List<NameValuePair> list = new ArrayList<>();
+                list.add(new BasicNameValuePair("login", mLogin));
+                list.add(new BasicNameValuePair("hash", mHash));
+                String answer = makePostRequest("http://104.131.184.188:8080/restoserver/signIn", list);
+                Gson gson = new Gson();
+                mToken = gson.fromJson(answer, Token.class).token;
+            } catch (Exception e) {
+                // Toast.makeText(getApplicationContext(), "Error " + e, Toast.LENGTH_LONG).show();
+                Log.e(TAG, e.toString());
+                onCancelled();
+            }
+            Log.d(TAG, "mToken " + mToken);
+            return !(mToken == null || mToken.equals(""));
+        }
+
+        public String makePostRequest(String url, List<NameValuePair> nameValuePairs) {
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpPost http = new HttpPost(url);
+
+            StringBuilder total = null;
+            try {
+                http.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+                HttpResponse response = httpclient.execute(http);
+                String line = "";
+                total = new StringBuilder();
+                BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+                while ((line = rd.readLine()) != null) {
+                    total.append(line);
+
+                }
+                Log.d(TAG, "RESPONCE " + total.toString());
+            } catch (Exception e) {
+                Log.e(TAG, total.toString());
+                e.printStackTrace();
+            }
+            return total.toString();
+
+        }
+
+        @Override
+        protected void onPostExecute(final Boolean success) {
+            mAuthTask = null;
+            Log.d(TAG, "success " + success);
+            if (success) {
+                signInButton.setProgress(100);
+                saveToken();
+                toUserProfile();
+                //finish();
+            } else {
+                signInButton.setProgress(-1);
+                mPasswordView.setError(getString(R.string.error_incorrect_password));
+                mPasswordView.requestFocus();
+            }
+        }
+
+        @Override
+        protected void onCancelled() {
+            mAuthTask = null;
+        }
+    }
+
+    void toUserProfile() {
+        Intent intent = new Intent(getApplicationContext(), UserProfileActivity.class);
+        intent.putExtra("token", mToken);
+        startActivity(intent);
+    }
+
+
+    public void attemptLogin(String login, String hash) {
+        String password;
+        if (mAuthTask != null) {
+            return;
+        }
+        if (login != null && hash != null) {
+            mAuthTask = new UserLoginTask(login, hash);
+            mAuthTask.execute((Void) null);
+        }
+
+        // Reset errors.
+        mLoginView.setError(null);
+        mPasswordView.setError(null);
+        // Store values at the time of the login attempt.
+        login = mLoginView.getText().toString();
+        password = mPasswordView.getText().toString();
+        boolean cancel = false;
+        View focusView = null;
+
+
+        // Check for a valid password, if the user entered one.
+        if (password == null || password.equals("") || !isPasswordValid(password)) {
+            mPasswordView.setError(getString(R.string.error_invalid_password));
+            focusView = mPasswordView;
+            cancel = true;
+        }
+
+        // Check for a valid email address.
+        if (TextUtils.isEmpty(login)) {
+            mLoginView.setError(getString(R.string.error_field_required));
+            focusView = mLoginView;
+            cancel = true;
+        } else if (!isEmailValid(login)) {
+            mLoginView.setError(getString(R.string.error_invalid_email));
+            focusView = mLoginView;
+            cancel = true;
+        }
+        hash = PasswordHash.createHash(login, password);
+        Log.d(TAG, "args:" + login + " " + password + " " + hash);
+        if (cancel) {
+            // There was an error; don't attempt login and focus the first
+            // form field with an error.
+            focusView.requestFocus();
+        } else {
+            mAuthTask = new UserLoginTask(login, hash);
+            mAuthTask.execute((Void) null);
+        }
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data == null) return;
+        String login = data.getStringExtra("login");
+        String hash = data.getStringExtra("hash");
+        attemptLogin(login, hash);
+    }
 
     void saveToken() {
         sPref = getPreferences(MODE_PRIVATE);
@@ -91,148 +234,6 @@ public class AccountAuthenticatorActivity extends Activity {
         return getPreferences(MODE_PRIVATE).getString("token", "");
     }
 
-
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
-
-        private final String mLogin;
-        private final String mPassword;
-
-        UserLoginTask(String login, String password) {
-            mLogin = login;
-            mPassword = password;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        //true if success
-        @Override
-        protected Boolean doInBackground(Void... strings) {
-            try {
-                List<NameValuePair> list = new ArrayList<>();
-                list.add(new BasicNameValuePair("login", mLogin));
-                list.add(new BasicNameValuePair("hash", mPassword));
-                String answer = makePostRequest("http://104.131.184.188:8080/restoserver/signIn", list);
-                Gson gson = new Gson();
-                mToken = gson.fromJson(answer, Token.class).token;
-            } catch (Exception e) {
-                Toast.makeText(getApplicationContext(), "Error " + e, Toast.LENGTH_LONG).show();
-                onCancelled();
-            }
-            //TODO what if not such user? need to create
-            return !(mToken == null || mToken.equals(""));
-        }
-
-        public String makePostRequest(String url, List<NameValuePair> nameValuePairs) {
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost http = new HttpPost(url);
-
-            StringBuilder total = null;
-            try {
-                http.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-                HttpResponse response = httpclient.execute(http);
-                String line = "";
-                total = new StringBuilder();
-                BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-                while ((line = rd.readLine()) != null) {
-                    total.append(line);
-
-                }
-                Log.d("Response", total.toString());
-            } catch (Exception e) {
-                Log.e("In Sending datatask", total.toString());
-                e.printStackTrace();
-            }
-            return total.toString();
-
-        }
-
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            mAuthTask = null;
-            showProgress(false);
-
-            //TODO problem vith changing intent
-            if (success) {
-                saveToken();
-                toUserProfile();
-                finish();
-            } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
-            }
-        }
-
-        @Override
-        protected void onCancelled() {
-            mAuthTask = null;
-            showProgress(false);
-        }
-
-    }
-
-    void toUserProfile() {
-        Intent intent = new Intent(getApplicationContext(), UserProfileActivity.class);
-        intent.putExtra("token", mToken);
-        startActivity(intent);
-    }
-
-
-    public void attemptLogin(String login, String hash) {
-        if (mAuthTask != null) {
-            return;
-        }
-        if (login != null && hash != null) {
-            showProgress(true);
-            mAuthTask = new UserLoginTask(login, hash);
-            mAuthTask.execute((Void) null);
-        }
-
-        // Reset errors.
-        mEmailView.setError(null);
-        mPasswordView.setError(null);
-
-        // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
-        boolean cancel = false;
-        View focusView = null;
-
-
-        // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
-            focusView = mPasswordView;
-            cancel = true;
-        }
-
-        // Check for a valid email address.
-        if (TextUtils.isEmpty(email)) {
-            mEmailView.setError(getString(R.string.error_field_required));
-            focusView = mEmailView;
-            cancel = true;
-        } else if (!isEmailValid(email)) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
-            focusView = mEmailView;
-            cancel = true;
-        }
-
-        if (cancel) {
-            // There was an error; don't attempt login and focus the first
-            // form field with an error.
-            focusView.requestFocus();
-        } else {
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
-
-            showProgress(true);
-            mAuthTask = new UserLoginTask(email, PasswordHash.createHash(login, password));
-            mAuthTask.execute((Void) null);
-        }
-    }
-
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
         return true;
@@ -240,40 +241,8 @@ public class AccountAuthenticatorActivity extends Activity {
 
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
-        return password.length() > 2;
+        return password.length() > 1;
     }
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    public void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-            mLoginFormView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });
-
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mProgressView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
-        } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-        }
-    }
 
 }

@@ -1,5 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.restomania.restomania.AccountAuthenticatorActivity"
@@ -7,84 +8,68 @@
     android:weightSum="1">
 
     <!-- Login progress -->
-    <ProgressBar
-        android:id="@+id/login_progress"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:visibility="gone"
-        android:layout_weight="1" />
 
-    <ScrollView
-        android:id="@+id/login_form"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:layout_weight="1">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <ImageView
+            android:layout_width="195dp"
+            android:layout_height="222dp"
+            android:id="@+id/logo_view"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/logo"
+            android:layout_gravity="center_horizontal" />
+
+        <EditText
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:inputType="text"
+            android:ems="10"
+            android:id="@+id/textName"
+            android:layout_gravity="center_horizontal"
+            android:hint="Введите ваше имя"
+            android:textColorHint="@android:color/black" />
 
-            <ImageView
-                android:layout_width="246dp"
-                android:layout_height="280dp"
-                android:id="@+id/logo_view"
-                android:layout_centerHorizontal="true"
-                android:src="@drawable/logo"
-                android:layout_gravity="center_horizontal" />
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:ems="10"
+            android:id="@+id/textLogin"
+            android:layout_gravity="center_horizontal"
+            android:hint="Введите логин"
+            android:textColorHint="@android:color/black" />
 
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:ems="10"
-                android:id="@+id/textName"
-                android:layout_gravity="center_horizontal"
-                android:hint="Введите ваше имя"
-                android:textColorHint="@android:color/black" />
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:id="@+id/textPassword"
+            android:layout_gravity="center_horizontal"
+            android:hint="Введите пароль"
+            android:textColorHint="@android:color/black"
+            android:password="false" />
 
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:ems="10"
-                android:id="@+id/textLogin"
-                android:layout_gravity="center_horizontal"
-                android:hint="Введите логин"
-                android:textColorHint="@android:color/black" />
+        <com.dd.processbutton.iml.ActionProcessButton
+            android:layout_width="200dp"
+            android:layout_height="60dp"
+            android:text="Зарегистрироваться"
+            android:id="@+id/btnRegister"
+            custom:pb_colorComplete="@color/green_complete"
+            custom:pb_colorNormal="@color/blue_normal"
+            custom:pb_colorPressed="@color/blue_pressed"
+            custom:pb_colorProgress="@color/purple_progress"
+            custom:pb_textComplete="Success"
+            custom:pb_textProgress="Loading"
+            custom:pb_textError="Error"
+            custom:pb_colorError="@color/red_error"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp" />
 
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:ems="10"
-                android:id="@+id/textPassword"
-                android:layout_gravity="center_horizontal"
-                android:hint="Введите пароль"
-                android:textColorHint="@android:color/black"
-                android:password="false" />
+    </LinearLayout>
 
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:ems="10"
-                android:id="@+id/textRepeatPassword"
-                android:layout_gravity="center_horizontal"
-                android:hint="Повторите пароль"
-                android:textColorHint="@android:color/black"
-                android:password="false" />
-
-        </LinearLayout>
-    </ScrollView>
-
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Зарегистрироваться"
-        android:id="@+id/btnRegister"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="1" />
 </LinearLayout>
