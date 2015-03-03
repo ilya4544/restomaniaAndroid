@@ -51,7 +51,7 @@ public class PasswordHash {
 
     static String createHash(String login, String password) {
         byte[] salt = md5(login).getBytes();
-        KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 128);
+        KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 1000, 128);
         SecretKeyFactory f = null;
         byte[] hash = null;
         try {

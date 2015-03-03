@@ -56,9 +56,9 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
         }
 
 
-        String name = textName.getText().toString();
-        String login = textLogin.getText().toString();
-        String pass = textPass.getText().toString();
+        String name = textName.getText().toString().trim();
+        String login = textLogin.getText().toString().trim();
+        String pass = textPass.getText().toString().trim();
         String hash = "";
         if (name.equals("") || login.equals("") || pass.equals("")) {
             Toast.makeText(this, "Заполните все поля", Toast.LENGTH_LONG).show();
@@ -66,6 +66,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
         }
         hash = PasswordHash.createHash(login, pass);
         Log.d(TAG, "args:" + name + " " + login + " " + pass + " " + hash);
+        btnRegister.setProgress(1);
         mAuthTask = new UserRegisterTask(login, hash, name);
         mAuthTask.execute((Void) null);
     }
@@ -91,7 +92,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            btnRegister.setProgress(1);
+
         }
 
 

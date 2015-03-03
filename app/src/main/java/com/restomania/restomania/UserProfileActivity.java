@@ -16,8 +16,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 import org.jsoup.Jsoup;
 
@@ -73,8 +76,8 @@ public class UserProfileActivity extends Activity implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        /*IntentIntegrator.initiateScan(this);*/
-        onActivityResult(REQUEST_CODE_QR_SCAN, 0, null);
+        IntentIntegrator.initiateScan(this);
+        //  onActivityResult(REQUEST_CODE_QR_SCAN, 0, null);
     }
 
 
@@ -115,7 +118,7 @@ public class UserProfileActivity extends Activity implements View.OnClickListene
         if (requestCode == REQUEST_CODE_WAITER) {
             return;
         }
-       /* // if (requestCode == REQUEST_CODE_QR_SCAN) {
+        if (requestCode == REQUEST_CODE_QR_SCAN) {
         IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         if (scanResult != null) {
             // handle scan result
@@ -129,13 +132,13 @@ public class UserProfileActivity extends Activity implements View.OnClickListene
         } else
             Toast.makeText(this, "Check internet and camera and try again. ", Toast.LENGTH_LONG).show();
         // else continue with any other code you need in the method
-        //}
-*/
-        String waiterId = "2";
+        }
+
+        /*String waiterId = "2";
         Intent toWaiterInfo = new Intent(this, WaiterActivity.class);
         toWaiterInfo.putExtra("waiter_id", waiterId);
         toWaiterInfo.putExtra("token", token);
         toWaiterInfo.putExtra("user_id", user.id);
-        startActivityForResult(toWaiterInfo, REQUEST_CODE_WAITER);
+        startActivityForResult(toWaiterInfo, REQUEST_CODE_WAITER);*/
     }
 }

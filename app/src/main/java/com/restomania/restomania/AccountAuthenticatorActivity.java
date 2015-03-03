@@ -39,6 +39,7 @@ public class AccountAuthenticatorActivity extends Activity {
     private EditText mLoginView;
     private EditText mPasswordView;
     private ActionProcessButton mSignInButton;
+    static long time = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +64,7 @@ public class AccountAuthenticatorActivity extends Activity {
         mSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                time = System.currentTimeMillis();
                 attemptLogin(null, null);
             }
         });
@@ -83,7 +85,6 @@ public class AccountAuthenticatorActivity extends Activity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            mSignInButton.setProgress(50);
         }
 
         //true if success
@@ -172,20 +173,19 @@ public class AccountAuthenticatorActivity extends Activity {
         mLoginView.setError(null);
         mPasswordView.setError(null);
         // Store values at the time of the login attempt.
-        login = mLoginView.getText().toString();
-        password = mPasswordView.getText().toString();
+        login = mLoginView.getText().toString().trim();
+        password = mPasswordView.getText().toString().trim();
         boolean cancel = false;
         View focusView = null;
 
 
-        // Check for a valid password, if the user entered one.
         if (TextUtils.isEmpty(password) || !isPasswordValid(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
         }
 
-        // Check for a valid email address.
+
         if (TextUtils.isEmpty(login)) {
             mLoginView.setError(getString(R.string.error_field_required));
             focusView = mLoginView;
@@ -197,13 +197,17 @@ public class AccountAuthenticatorActivity extends Activity {
         }
 
         if (cancel) {
-            // There was an error; don't attempt login and focus the first
-            // form field with an error.
+
             focusView.requestFocus();
         } else {
+
             hash = PasswordHash.createHash(login, password);
+
             Log.d(TAG, "Going to userlogintask, args:" + login + " " + password + " " + hash);
+            mSignInButton.setProgress(1);
+
             mAuthTask = new UserLoginTask(login, hash);
+            //Log.d("TIME", "4=" + (System.currentTimeMillis() - time));
             mAuthTask.execute((Void) null);
         }
     }
