@@ -6,22 +6,22 @@ package com.restomania.restomania;
 public class Waiter {
     int id;
     String name;
-    float rating;
+    String rating;
     String organization;
-    int countRating;
+    int countReviews;
 
 
-    public Waiter(int id, String name, float rating, String organization, int countRating) {
+    public Waiter(int id, String name, String rating, String organization, int countReviews) {
         this.id = id;
         this.name = name;
         this.rating = rating;
         this.organization = organization;
-        this.countRating = countRating;
+        this.countReviews = countReviews;
 
     }
 
     @Override
     public String toString() {
-        return "Имя:" + name + "\n" + "Компания:" + organization + " [" + id + ", " + rating + ", " + countRating;
+        return "Имя:" + name + "\n" + "Компания:" + organization + " [" + id + ", " + rating + ", " + countReviews;
     }
 }

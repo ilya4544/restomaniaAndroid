@@ -76,8 +76,8 @@ public class UserProfileActivity extends Activity implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        IntentIntegrator.initiateScan(this);
-        //  onActivityResult(REQUEST_CODE_QR_SCAN, 0, null);
+        new IntentIntegrator(this).initiateScan();
+        onActivityResult(REQUEST_CODE_QR_SCAN, 0, null);
     }
 
 
@@ -108,7 +108,7 @@ public class UserProfileActivity extends Activity implements View.OnClickListene
 
         @Override
         protected void onPostExecute(final Void success) {
-            nameFirst.setText(user.name.split(" ")[0]);
+            nameFirst.setText(user.name);
             //nameLast.setText(user.name.split(" ")[1]);
         }
     }

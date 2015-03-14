@@ -27,10 +27,12 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-//first activity, sign in user, then go to his/her profile
-public class AccountAuthenticatorActivity extends Activity {
+/**
+ * sign in user, then go to his/her profile
+ */
+public class LoginActivity extends Activity {
 
-    private static String TAG = "AccountAuthenicator";
+    private final String TAG = "LoginActivity";
     private SharedPreferences sPref;
     private String mToken;
     private UserLoginTask mAuthTask = null;
@@ -39,7 +41,6 @@ public class AccountAuthenticatorActivity extends Activity {
     private EditText mLoginView;
     private EditText mPasswordView;
     private ActionProcessButton mSignInButton;
-    static long time = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +65,6 @@ public class AccountAuthenticatorActivity extends Activity {
         mSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                time = System.currentTimeMillis();
                 attemptLogin(null, null);
             }
         });
@@ -80,7 +80,9 @@ public class AccountAuthenticatorActivity extends Activity {
         UserLoginTask(String login, String password) {
             mLogin = login;
             mHash = password;
+
         }
+
 
         @Override
         protected void onPreExecute() {
@@ -121,7 +123,7 @@ public class AccountAuthenticatorActivity extends Activity {
                     total.append(line);
 
                 }
-                Log.d(TAG, "RESPONCE " + total.toString());
+                Log.d(TAG, "RESPONSE " + total.toString());
             } catch (Exception e) {
                 Log.e(TAG, total.toString());
                 e.printStackTrace();

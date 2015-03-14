@@ -33,7 +33,7 @@ public class WaiterActivity extends Activity implements View.OnClickListener {
     private Waiter waiter;
     private TextView waiterName;
     private ImageView waiterImg;
-    private static String TAG = "WaiterActivity";
+    private final String TAG = "WaiterActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,13 +70,11 @@ public class WaiterActivity extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        String rating = String.valueOf((int) (waiterRatingbar.getRating() * 2));
+        waiter.rating = String.valueOf((int) (waiterRatingbar.getRating() * 2));
         String rev = waiterReview.getText().toString();
         //TODO good name of variable,fix rating
-        String rat = String.valueOf((int) waiter.rating * 2);
-        Log.e(TAG, "args:" + mToken + " " + waiter.id + " " + rev + " " + rat);
-        new UploadingReviewTask().execute(mToken, String.valueOf(waiter.id), rev, rat);
-        //Log.d("Rating", "" + rating);
+        Log.e(TAG, "args:" + mToken + " " + waiter.id + " " + rev + " ");
+        new UploadingReviewTask().execute(mToken, String.valueOf(waiter.id), rev, waiter.rating);
         UserProfileActivity.countReview++;
         finish();
     }
@@ -114,7 +112,7 @@ public class WaiterActivity extends Activity implements View.OnClickListener {
         @Override
         protected void onPostExecute(final Void success) {
             waiterName.setText(waiter.name);
-            waiterRatingbar.setRating(waiter.rating / 2);
+            waiterRatingbar.setRating(Integer.parseInt(waiter.rating) / 2);
             Bitmap bm = null;
             //TODO get pictures from internet, save to localdb???
             if (userId.equals("1"))

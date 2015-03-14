@@ -3,7 +3,7 @@
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.restomania.restomania.AccountAuthenticatorActivity"
+    tools:context="com.restomania.restomania.LoginActivity"
     android:orientation="vertical"
     android:weightSum="1">
 
@@ -19,7 +19,6 @@
             android:id="@+id/image_logo"
             android:layout_width="195dp"
             android:layout_height="222dp"
-            android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
             android:src="@drawable/logo" />
 
@@ -60,14 +59,14 @@
             android:layout_height="60dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
-            android:text="Зарегистрироваться"
+            android:text="@string/btn_register"
             custom:pb_colorComplete="@color/green_complete"
             custom:pb_colorNormal="@color/blue_normal"
             custom:pb_colorPressed="@color/blue_pressed"
             custom:pb_colorProgress="@color/purple_progress"
-            custom:pb_textComplete="Success"
-            custom:pb_textProgress="Loading"
-            custom:pb_textError="Error"
+            custom:pb_textComplete="Успех"
+            custom:pb_textProgress="Загрузка"
+            custom:pb_textError="Ошибка"
             custom:pb_colorError="@color/red_error" />
 
     </LinearLayout>

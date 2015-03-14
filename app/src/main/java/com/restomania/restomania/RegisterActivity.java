@@ -29,7 +29,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
     private EditText textPass;
     private ActionProcessButton btnRegister;
     private UserRegisterTask mAuthTask = null;
-    private static String TAG = "REGISTER";
+    private final String TAG = "REGISTER";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +65,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
             return;
         }
         hash = PasswordHash.createHash(login, pass);
-        Log.d(TAG, "args:" + name + " " + login + " " + pass + " " + hash);
+        //Log.d(TAG, "args:" + name + " " + login + " " + pass + " " + hash);
         btnRegister.setProgress(1);
         mAuthTask = new UserRegisterTask(login, hash, name);
         mAuthTask.execute((Void) null);
@@ -107,6 +107,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
                 Log.d(TAG, "Request " + bowlingParams());
                 Log.d(TAG, "Response " + answer);
                 JSONObject ans = new JSONObject(answer);
+                Log.d(TAG, "Response " + ans.toString());
                 if (ans.has("error")) {
                     return false;
                 }
@@ -124,16 +125,11 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
                     .url(url)
                     .post(body)
                     .build();
-            Log.d(TAG, "REQUEST " + request.body().contentLength() + " " + mLogin + " " + mHash);
+            // Log.d(TAG, "REQUEST " + request.body().contentLength() + " " + mLogin + " " + mHash);
             Response response = client.newCall(request).execute();
             return response.body().string();
         }
 
-        String bowlingJson() {
-            return "{'login':'" + mLogin + "',"
-                    + "'hash':'" + mHash + "',"
-                    + "'name':'" + mName + "'}";
-        }
 
         String bowlingParams() {
             return "login=" + mLogin + "&"
@@ -153,7 +149,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
                 setResult(RESULT_OK, intent);
                 finish();
             } else {
-                //Toast.makeText(getApplicationContext(), "Что то пошло не так", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Что то пошло не так", Toast.LENGTH_LONG).show();
                 btnRegister.setProgress(-1);
             }
 

@@ -3,7 +3,7 @@
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.restomania.restomania.AccountAuthenticatorActivity"
+    tools:context="com.restomania.restomania.LoginActivity"
     android:orientation="vertical"
     android:weightSum="1">
 
@@ -54,9 +54,9 @@
         custom:pb_colorNormal="@color/blue_normal"
         custom:pb_colorPressed="@color/blue_pressed"
         custom:pb_colorProgress="@color/purple_progress"
-        custom:pb_textComplete="Success"
-        custom:pb_textProgress="Loading"
-        custom:pb_textError="Error"
+        custom:pb_textComplete="@string/label_success"
+        custom:pb_textProgress="@string/label_loading"
+        custom:pb_textError="@string/label_error"
         custom:pb_colorError="@color/red_error" />
 
     <LinearLayout
@@ -81,7 +81,7 @@
             android:layout_height="wrap_content"
             android:text="@string/link_create"
             android:layout_weight="0.5"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:linksClickable="true"
             android:clickable="true"
             android:elegantTextHeight="false"
